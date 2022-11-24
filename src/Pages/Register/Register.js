@@ -23,6 +23,7 @@ const Register = () => {
             reset();
             saveUserInDatabase(data);
             const user = result.user;
+            getJWT({email: user?.email});
             toast.success(`${user?.displayName} registered successfully`);
             navigate("/");
           })
@@ -34,7 +35,7 @@ const Register = () => {
   const handleGoogleLogin = () => {
     googleLogin()
       .then((result) => {
-        console.log(result.user);
+        getJWT({email: result.user?.email});
       })
       .catch((error) => console.error(error));
   };
@@ -55,6 +56,20 @@ const Register = () => {
     })
     .then(res => res.json())
     .then(data => console.log(data))
+  };
+
+  const getJWT = user => {
+    fetch('http://localhost:5000/jwt', {
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json'
+      },
+      body: JSON.stringify(user)
+    })
+    .then(res => res.json())
+    .then(data => {
+      localStorage.setItem('accessToken', data.accessToken)
+    })
   };
 
   return (

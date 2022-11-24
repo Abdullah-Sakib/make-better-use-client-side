@@ -5,6 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../Contexts/AuthProvider/AuthProvider";
 import { BsGoogle } from "react-icons/bs";
 
+
 const Login = () => {
   const { logIn, googleLogin } = useContext(AuthContext);
   const navigate = useNavigate();
@@ -20,19 +21,35 @@ const Login = () => {
       .then((result) => {
         reset();
         const user = result.user;
+        getJWT({email: user?.email});
         toast.success(`${user?.displayName} loged in successfully.`);
         navigate("/");
       })
       .catch((error) => console.error(error));
   };
 
+
   const handleGoogleLogin = () => {
      googleLogin()
      .then(result => {
-      console.log(result.user);
+      getJWT({email: result.user?.email});
      })
      .catch(error => console.error(error))
   }
+
+  const getJWT = user => {
+    fetch('http://localhost:5000/jwt', {
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json'
+      },
+      body: JSON.stringify(user)
+    })
+    .then(res => res.json())
+    .then(data => {
+      localStorage.setItem('accessToken', data.accessToken)
+    })
+  };
 
   return (
     <div>
