@@ -1,6 +1,18 @@
-import React from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 
 const AddProducts = () => {
+  const [categories, setCategories] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:5000/categories")
+      .then((result) => {
+        setCategories(result.data);
+      })
+      .catch((error) => console.log(error));
+  }, []);
+
   const handleAddCategory = (event) => {
     event.preventDefault();
     const name = event.target.name.value;
@@ -38,13 +50,22 @@ const AddProducts = () => {
           placeholder="price"
           className="input input-bordered w-full mb-3"
         />
-        <select name="condition" className="select select-bordered text-base font-normal  w-full mb-3" >
-          <option disabled selected >
+        <select
+          name="condition"
+          className="select select-bordered text-base font-normal  w-full mb-3"
+        >
+          <option disabled selected>
             select product condition
           </option>
-          <option className="text-black" value='excellent'>Excellent</option>
-          <option className="text-black" value='good'>Good</option>
-          <option className="text-black" value="fair">Fair</option>
+          <option className="text-black" value="excellent">
+            Excellent
+          </option>
+          <option className="text-black" value="good">
+            Good
+          </option>
+          <option className="text-black" value="fair">
+            Fair
+          </option>
         </select>
         <input
           type="number"
@@ -58,13 +79,18 @@ const AddProducts = () => {
           placeholder="location"
           className="input input-bordered w-full mb-3"
         />
-        <select name="category" className="select select-bordered text-base font-normal  w-full mb-3" >
-          <option disabled selected >
+        <select
+          name="category"
+          className="select select-bordered text-base font-normal  w-full mb-3"
+        >
+          <option disabled selected>
             select product category
           </option>
-          <option className="text-black" value='excellent'>Excellent</option>
-          <option className="text-black" value='good'>Good</option>
-          <option className="text-black" value="fair">Fair</option>
+          {categories?.map((category) => (
+            <option key={category._id} value={category?.name}>
+              {category?.name}
+            </option>
+          ))}
         </select>
         <input
           type="date"
@@ -72,7 +98,10 @@ const AddProducts = () => {
           placeholder="Year of purchase"
           className="input input-bordered w-full mb-3"
         />
-        <textarea className="textarea textarea-bordered mb-3" placeholder="Description"></textarea>
+        <textarea
+          className="textarea textarea-bordered mb-3"
+          placeholder="Description"
+        ></textarea>
         <button type="submit" className="btn btn-primary">
           Add
         </button>
