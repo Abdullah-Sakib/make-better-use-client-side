@@ -1,9 +1,8 @@
 import React from "react";
 
 const CategoryCard = ({category}) => {
-  console.log(category);
   return (
-    <div className="flex flex-col justify-between overflow-hidden text-left transition-shadow duration-200 bg-white rounded shadow-xl group hover:shadow-2xl ">
+    <div className="flex flex-col justify-between overflow-hidden text-left transition-shadow duration-200 bg-white rounded shadow-xl group hover:shadow-2xl">
       <div className="p-5 relative">
         <img
           src={category?.image}

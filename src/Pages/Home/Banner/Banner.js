@@ -5,7 +5,7 @@ const Banner = () => {
     <div>
       <div
         className="hero min-h-[92vh]"
-        style={{ backgroundImage: `url("https://images.unsplash.com/photo-1647711411594-db03433f948d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80")` }}
+        style={{ backgroundImage: `url("https://images.unsplash.com/photo-1580852300513-9b50125bf293?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=871&q=80")` }}
       >
         <div className="hero-overlay bg-opacity-60"></div>
         <div className="hero-content text-center text-neutral-content">
