@@ -27,6 +27,7 @@ const Register = () => {
             const user = result.user;
             getJWT({email: user?.email});
             navigate(from, {replace: true});
+            toast.success(`${data?.fullname} registered successfully`);
           })
           .catch((error) => console.error(error));
       })
@@ -66,9 +67,6 @@ const Register = () => {
     .then(res => res.json())
     .then(data => {
       console.log(data)
-      if(data.acknowledged){
-        toast.success(`${userData.name} registered successfully`);
-      }
     })
   };
 
