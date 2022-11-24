@@ -36,6 +36,13 @@ const Register = () => {
   const handleGoogleLogin = () => {
     googleLogin()
       .then((result) => {
+        const user = result.user;
+        const dataToSave = {
+          fullname: user?.displayName,
+          email: user?.email,
+          seller: false
+        };
+        saveUserInDatabase(dataToSave);
         getJWT({email: result.user?.email});
         navigate(from, {replace: true});
         toast.success(`${result.user?.displayName} login successfully`);
@@ -47,7 +54,7 @@ const Register = () => {
     const userData = {
       name: data.fullname,
       email: data.email,
-      seller: data.seller
+      seller: `${data?.seller ? 'seller': 'user'}`
     };
     fetch('http://localhost:5000/users', {
       method: 'POST',
