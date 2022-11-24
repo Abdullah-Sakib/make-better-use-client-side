@@ -6,7 +6,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../Contexts/AuthProvider/AuthProvider";
 
 const Register = () => {
-  const { createUser, updateUserProfile, googleLogin } = useContext(AuthContext);
+  const { createUser, updateUserProfile, googleLogin } =
+    useContext(AuthContext);
   const {
     register,
     handleSubmit,
@@ -20,9 +21,10 @@ const Register = () => {
         updateUserProfile(data.fullname)
           .then(() => {
             reset();
+            saveUserInDatabase(data);
             const user = result.user;
             toast.success(`${user?.displayName} registered successfully`);
-            navigate('/')
+            navigate("/");
           })
           .catch((error) => console.error(error));
       })
@@ -31,11 +33,29 @@ const Register = () => {
 
   const handleGoogleLogin = () => {
     googleLogin()
-    .then(result => {
-     console.log(result.user);
+      .then((result) => {
+        console.log(result.user);
+      })
+      .catch((error) => console.error(error));
+  };
+
+  const saveUserInDatabase = data => {
+    const userData = {
+      name: data.fullname,
+      email: data.email,
+      seller: data.seller
+    };
+    
+    fetch('http://localhost:5000/users', {
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json'
+      },
+      body: JSON.stringify(userData)
     })
-    .catch(error => console.error(error))
- }
+    .then(res => res.json())
+    .then(data => console.log(data))
+  };
 
   return (
     <div>
@@ -124,7 +144,10 @@ const Register = () => {
           </div>
           <div className="divider font-semibold">OR</div>
           <div>
-            <button onClick={handleGoogleLogin} className="flex items-center shadow-xl w-96 h-10 rounded-full bg-primary text-white py-6 border">
+            <button
+              onClick={handleGoogleLogin}
+              className="flex items-center shadow-xl w-96 h-10 rounded-full bg-primary text-white py-6 border"
+            >
               <BsGoogle className="text-4xl ml-2 text-orange-400"></BsGoogle>{" "}
               <span className="flex-grow font-semibold">
                 Continue With Google
