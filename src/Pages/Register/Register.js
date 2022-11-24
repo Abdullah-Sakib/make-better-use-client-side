@@ -1,11 +1,12 @@
 import React, { useContext } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
+import { BsGoogle } from "react-icons/bs";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../Contexts/AuthProvider/AuthProvider";
 
 const Register = () => {
-  const { createUser, updateUserProfile } = useContext(AuthContext);
+  const { createUser, updateUserProfile, googleLogin } = useContext(AuthContext);
   const {
     register,
     handleSubmit,
@@ -27,9 +28,18 @@ const Register = () => {
       })
       .catch((error) => console.error(error));
   };
+
+  const handleGoogleLogin = () => {
+    googleLogin()
+    .then(result => {
+     console.log(result.user);
+    })
+    .catch(error => console.error(error))
+ }
+
   return (
     <div>
-      <div className="hero min-h-screen bg-base-200">
+      <div className="hero mt-10 mb-20">
         <div className="hero-content flex-col ">
           <div className="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
             <form
@@ -111,6 +121,15 @@ const Register = () => {
                 </Link>
               </p>
             </form>
+          </div>
+          <div className="divider font-semibold">OR</div>
+          <div>
+            <button onClick={handleGoogleLogin} className="flex items-center shadow-xl w-96 h-10 rounded-full bg-primary text-white py-6 border">
+              <BsGoogle className="text-4xl ml-2 text-orange-400"></BsGoogle>{" "}
+              <span className="flex-grow font-semibold">
+                Continue With Google
+              </span>
+            </button>
           </div>
         </div>
       </div>
