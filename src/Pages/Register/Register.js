@@ -2,12 +2,14 @@ import React, { useContext } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { BsGoogle } from "react-icons/bs";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../Contexts/AuthProvider/AuthProvider";
 
 const Register = () => {
   const { createUser, updateUserProfile, googleLogin } =
     useContext(AuthContext);
+    const location = useLocation();
+    const from = location.state?.from?.pathname || '/';
   const {
     register,
     handleSubmit,
@@ -24,8 +26,7 @@ const Register = () => {
             saveUserInDatabase(data);
             const user = result.user;
             getJWT({email: user?.email});
-            toast.success(`${user?.displayName} registered successfully`);
-            navigate("/");
+            navigate(from, {replace: true});
           })
           .catch((error) => console.error(error));
       })
@@ -36,6 +37,8 @@ const Register = () => {
     googleLogin()
       .then((result) => {
         getJWT({email: result.user?.email});
+        navigate(from, {replace: true});
+        toast.success(`${result.user?.displayName} login successfully`);
       })
       .catch((error) => console.error(error));
   };
@@ -46,7 +49,6 @@ const Register = () => {
       email: data.email,
       seller: data.seller
     };
-    
     fetch('http://localhost:5000/users', {
       method: 'POST',
       headers: {
@@ -55,7 +57,12 @@ const Register = () => {
       body: JSON.stringify(userData)
     })
     .then(res => res.json())
-    .then(data => console.log(data))
+    .then(data => {
+      console.log(data)
+      if(data.acknowledged){
+        toast.success(`${userData.name} registered successfully`);
+      }
+    })
   };
 
   const getJWT = user => {

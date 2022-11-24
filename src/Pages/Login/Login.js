@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../Contexts/AuthProvider/AuthProvider";
 import { BsGoogle } from "react-icons/bs";
 
@@ -9,6 +9,8 @@ import { BsGoogle } from "react-icons/bs";
 const Login = () => {
   const { logIn, googleLogin } = useContext(AuthContext);
   const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || '/';
   const {
     register,
     handleSubmit,
@@ -23,9 +25,11 @@ const Login = () => {
         const user = result.user;
         getJWT({email: user?.email});
         toast.success(`${user?.displayName} loged in successfully.`);
-        navigate("/");
+        navigate(from, {replace: true});
       })
-      .catch((error) => console.error(error));
+      .catch((error) => {
+        toast.error('Please Try Again.')
+      });
   };
 
 
@@ -33,8 +37,11 @@ const Login = () => {
      googleLogin()
      .then(result => {
       getJWT({email: result.user?.email});
+      navigate(from, {replace: true});
      })
-     .catch(error => console.error(error))
+     .catch(error => {
+      toast.error('Please Try Again.')
+     })
   }
 
   const getJWT = user => {
