@@ -1,11 +1,21 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../../Contexts/AuthProvider/AuthProvider";
 
 const Register = () => {
+  const {createUser, updateUserProfile } = useContext(AuthContext);
   const { register, handleSubmit, formState: { errors } } = useForm();
   const handleCreateUser = data => {
-    console.log(data);
+    createUser(data.email, data.password)
+    .then(result => {
+      updateUserProfile(data.fullname)
+      .then(() => {
+        console.log(result.user);
+       })
+      .catch(error => console.error(error))
+    })
+    .catch(error => console.error(error))
   }
   return (
     <div>
@@ -24,7 +34,7 @@ const Register = () => {
                   className="input input-bordered"
                   {...register("fullname", { required: "Please provide your full name" })} 
                 />
-                 {errors.fullname && <p className="text-error" role="alert">{errors.fullname?.message}</p>}
+                 {errors.fullname && <p className="text-error mt-1" role="alert">{errors.fullname?.message}</p>}
               </div>
               <div className="form-control">
                 <label className="label">
@@ -36,7 +46,7 @@ const Register = () => {
                   className="input input-bordered"
                   {...register("email", { required: "Please provide your email" })} 
                 />
-                 {errors.email && <p className="text-error" role="alert">{errors.email?.message}</p>}
+                 {errors.email && <p className="text-error mt-1"  role="alert">{errors.email?.message}</p>}
               </div>
               <div className="form-control">
                 <label className="label">
@@ -48,7 +58,7 @@ const Register = () => {
                   className="input input-bordered"
                   {...register("password", { required: "Please provide your password" })} 
                 />
-                 {errors.password && <p className="text-error" role="alert">{errors.password?.message}</p>}
+                 {errors.password && <p className="text-error mt-1" role="alert">{errors.password?.message}</p>}
               </div>
               <div className="form-control">
                 <label className="label cursor-pointer justify-start">
