@@ -1,54 +1,27 @@
-import React from 'react';
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import CategoryCard from "./CategoryCard";
 
 const Categories = () => {
+  const [categories, setCategories] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:5000/categories")
+      .then((result) => {
+        setCategories(result.data);
+      })
+      .catch((error) => console.log(error));
+  }, []);
+
   return (
-    <div className="px-24 mb-32 mt-12">
-      <h1 className="text-2xl font-semibold text-center mb-8">Categories section</h1>
-      <div className="grid grid-cols-3 gap-10">
-
-
-        <div className="card card-compact  bg-base-100 shadow-xl">
-          <figure>
-            <img src="https://placeimg.com/400/225/arch" alt="Shoes" />
-          </figure>
-          <div className="card-body">
-            <h2 className="card-title">Shoes!</h2>
-            <p>If a dog chews shoes whose shoes does he choose?</p>
-            <div className="card-actions justify-end">
-              <button className="btn btn-primary">Buy Now</button>
-            </div>
-          </div>
+    <div className="">
+      <div className="relative px-4 py-16 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-20">
+        <div className="relative grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+          {categories?.map((category) => (
+            <CategoryCard key={category._id} category={category}></CategoryCard>
+          ))}
         </div>
-
-
-        <div className="card card-compact bg-base-100 shadow-xl">
-          <figure>
-            <img src="https://placeimg.com/400/225/arch" alt="Shoes" />
-          </figure>
-          <div className="card-body">
-            <h2 className="card-title">Shoes!</h2>
-            <p>If a dog chews shoes whose shoes does he choose?</p>
-            <div className="card-actions justify-end">
-              <button className="btn btn-primary">Buy Now</button>
-            </div>
-          </div>
-        </div>
-
-
-        <div className="card card-compact  bg-base-100 shadow-xl">
-          <figure>
-            <img src="https://placeimg.com/400/225/arch" alt="Shoes" />
-          </figure>
-          <div className="card-body">
-            <h2 className="card-title">Shoes!</h2>
-            <p>If a dog chews shoes whose shoes does he choose?</p>
-            <div className="card-actions justify-end">
-              <button className="btn btn-primary">Buy Now</button>
-            </div>
-          </div>
-        </div>
-
-
       </div>
     </div>
   );
