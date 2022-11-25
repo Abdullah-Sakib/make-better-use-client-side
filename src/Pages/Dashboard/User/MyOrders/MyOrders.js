@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import React from "react";
+import { Link } from "react-router-dom";
 
 const MyOrders = () => {
   const { data: orders = [], isLoading } = useQuery({
@@ -13,9 +14,6 @@ const MyOrders = () => {
       }).then((res) => res.json()),
   });
 
-  const { productImage, productName, productPrice } = orders;
-
-  // console.log(productImage, productName, productPrice);
   return (
     <div>
       <div className="grid grid-cols-3 gap-10">
@@ -38,9 +36,14 @@ const MyOrders = () => {
               </p>
 
               <div className="card-actions justify-end">
-                <label htmlFor="booking-modal" className="btn btn-sm px-5 btn-primary">
-                  Pay
-                </label>
+                <Link to={`/dashboard/checkout/${order._id}`}>
+                  <label
+                    htmlFor="booking-modal"
+                    className="btn btn-sm px-5 btn-primary"
+                  >
+                    Pay
+                  </label>
+                </Link>
               </div>
             </div>
           </div>
