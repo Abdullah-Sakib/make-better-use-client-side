@@ -1,8 +1,7 @@
 import React from "react";
 import { GoLocation } from "react-icons/go";
 
-const CategoriesPageCard = ({ product }) => {
-  console.log(product);
+const CategoriesPageCard = ({ product, setSelectedProduct }) => {
   const {
     name,
     location,
@@ -11,12 +10,13 @@ const CategoriesPageCard = ({ product }) => {
     yearsOfUse,
     postDate,
     sellerName,
+    image
   } = product;
   return (
     <div>
       <div className="card card-compact rounded-lg bg-base-100 shadow-xl">
         <figure className="h-64">
-          <img src={product?.image} alt="Shoes" />
+          <img src={image} alt="Shoes" />
         </figure>
         <div className="card-body">
           <h2 className="card-title">
@@ -42,7 +42,7 @@ const CategoriesPageCard = ({ product }) => {
             <button className="btn btn-xs">Report</button>
           </div>
           <div className="card-actions justify-end">
-            <button className="btn btn-primary">Book Now</button>
+            <label htmlFor="booking-modal"  onClick={() => setSelectedProduct(product)} className="btn btn-primary">Book Now</label>
           </div>
         </div>
       </div>
