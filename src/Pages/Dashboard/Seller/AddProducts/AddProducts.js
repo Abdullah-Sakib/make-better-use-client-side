@@ -1,11 +1,19 @@
 import axios from "axios";
+import { format } from "date-fns/esm";
 import React, { useContext, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 import { AuthContext } from "../../../../Contexts/AuthProvider/AuthProvider";
 
 const AddProducts = () => {
-  const {user} = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
   const [categories, setCategories] = useState([]);
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm();
 
   useEffect(() => {
     axios
@@ -16,43 +24,46 @@ const AddProducts = () => {
       .catch((error) => console.log(error));
   }, []);
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
-
   const handleAddProduct = (data) => {
     data.sellerName = user.displayName;
     data.sellerEmail = user.email;
+    data.postDate = format(new Date(), "PP");
 
     const productImage = data.image[0];
     const formData = new FormData();
-    formData.append('image', productImage);
+    formData.append("image", productImage);
 
-    fetch(`https://api.imgbb.com/1/upload?key=${process.env.REACT_APP_imgbb_API}`,{
-      method: 'POST',
-      body: formData
-    })
-    .then(res => res.json())
-    .then(imgData => {
-      const img = imgData.data.url;
-      data.image = img;
-      console.log(data);
-    })
-
-   
+    fetch(
+      `https://api.imgbb.com/1/upload?key=${process.env.REACT_APP_imgbb_API}`,
+      {
+        method: "POST",
+        body: formData,
+      }
+    )
+      .then((res) => res.json())
+      .then((imgData) => {
+        const img = imgData.data.url;
+        data.image = img;
+        saveProductInDB(data);
+      });
   };
 
-  // fetch('http://localhost:5000/categories', {
-  //   method: 'POST',
-  //   headers: {
-  //     'content-type': 'application/json'
-  //   },
-  //   body: JSON.stringify(data)
-  // })
-  // .then(res => res.json())
-  // .then(data => console.log(data))
+  const saveProductInDB = (data) => {
+    fetch("http://localhost:5000/products", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(data),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.acknowledged) {
+          toast.success("Product Added Successfully.");
+          reset();
+        }
+      });
+  };
 
   return (
     <div>
@@ -78,13 +89,28 @@ const AddProducts = () => {
           {...register("name", { required: true })}
         />
 
-        <label className="label font-semibold">Price</label>
+        <label className="label font-semibold">Original Price</label>
         <input
           type="number"
-          name="price"
-          placeholder="price"
+          placeholder="original price"
           className="input input-bordered w-full "
-          {...register("price", { required: true })}
+          {...register("originalPrice", { required: true })}
+        />
+
+        <label className="label font-semibold">Resell Price</label>
+        <input
+          type="number"
+          placeholder="resell price"
+          className="input input-bordered w-full "
+          {...register("resellPrice", { required: true })}
+        />
+
+        <label className="label font-semibold">Years of use</label>
+        <input
+          type="number"
+          placeholder="years of use"
+          className="input input-bordered w-full "
+          {...register("yearsOfUse", { required: true })}
         />
 
         <label className="label font-semibold">Product Condition</label>
