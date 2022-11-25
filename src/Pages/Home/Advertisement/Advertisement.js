@@ -1,54 +1,69 @@
+import { useQuery } from "@tanstack/react-query";
 import React from "react";
+import { GoLocation } from "react-icons/go";
 
 const Advertisement = () => {
+  const {
+    data: products = [],
+    isLoading,
+  } = useQuery({
+    queryKey: ["sellerProducts"],
+    queryFn: () =>
+      fetch(`http://localhost:5000/advertisedProducts`).then((res) =>
+        res.json()
+      ),
+  });
+
+  if(products.length === 0){
+    return
+  }
+
   return (
     <div className="px-24 mb-22 mt-24">
       <div className="grid grid-cols-3 gap-10">
 
-
-        <div className="card card-compact rounded-lg bg-base-100 shadow-xl">
-          <figure className="h-52">
-            <img src="https://images.unsplash.com/photo-1591114286974-595c5ffb0c41?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=871&q=80" alt="Shoes" />
-          </figure>
-          <div className="card-body">
-            <h2 className="card-title">Canon</h2>
-            <p>If a dog chews shoes whose shoes does he choose?</p>
-            <div className="card-actions justify-end">
-              <button className="btn btn-primary">Buy Now</button>
+        {products?.map((product) => (
+          <div className="card card-compact rounded-lg bg-base-100 shadow-xl">
+            <figure className="h-52">
+              <img src={product.image} alt="Shoes" />
+            </figure>
+            <div className="card-body">
+              <h2 className="card-title">
+                {product.name?.length > 30 ? product.name.slice(0, 30) + "..." : product.name}
+              </h2>
+              <div className="flex flex-row-reverse justify-between">
+                <p className="flex items-center justify-end text-base">
+                  <GoLocation className="mr-2 "></GoLocation> {product.location}
+                </p>
+                <p className="text-base">
+                  Resell Price :{" "}
+                  <span className="font-bold">${product.resellPrice}</span>
+                </p>
+              </div>
+              <p className="text-base">
+                Original Price :{" "}
+                <span className="font-bold">${product.originalPrice}</span>
+              </p>
+              <p className="text-base">
+                Years of use : <span className="font-bold">{product.yearsOfUse}</span>
+              </p>
+              <p className="text-base">Seller : {product.sellerName}</p>
+              <div className="flex justify-between items-center">
+                <p className="text-base">Post Time : {product.postDate}</p>
+                <button className="btn btn-xs">Report</button>
+              </div>
+              <div className="card-actions justify-end">
+                <label
+                  htmlFor="booking-modal"
+                  // onClick={() => setSelectedProduct(product)}
+                  className="btn btn-primary"
+                >
+                  Book Now
+                </label>
+              </div>
             </div>
           </div>
-        </div>
-
-
-        <div className="card card-compact rounded-lg bg-base-100 shadow-xl">
-          <figure className="h-52">
-            <img src="https://images.unsplash.com/photo-1591114286974-595c5ffb0c41?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=871&q=80" alt="Shoes" />
-          </figure>
-          <div className="card-body">
-            <h2 className="card-title">Canon</h2>
-            <p>If a dog chews shoes whose shoes does he choose?</p>
-            <div className="card-actions justify-end">
-              <button className="btn btn-primary">Buy Now</button>
-            </div>
-          </div>
-        </div>
-
-
-
-        <div className="card card-compact rounded-lg bg-base-100 shadow-xl">
-          <figure className="h-52">
-            <img src="https://images.unsplash.com/photo-1591114286974-595c5ffb0c41?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=871&q=80" alt="Shoes" />
-          </figure>
-          <div className="card-body">
-            <h2 className="card-title">Canon</h2>
-            <p>If a dog chews shoes whose shoes does he choose?</p>
-            <div className="card-actions justify-end">
-              <button className="btn btn-primary">Buy Now</button>
-            </div>
-          </div>
-        </div>
-
-
+        ))}
 
       </div>
     </div>
