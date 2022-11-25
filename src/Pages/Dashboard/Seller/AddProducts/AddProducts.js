@@ -8,11 +8,11 @@ import { AuthContext } from "../../../../Contexts/AuthProvider/AuthProvider";
 const AddProducts = () => {
   const { user } = useContext(AuthContext);
   const [categories, setCategories] = useState([]);
+  const [processing, setProcessing] = useState(false);
   const {
     register,
     handleSubmit,
     reset,
-    formState: { errors },
   } = useForm();
 
   useEffect(() => {
@@ -25,6 +25,7 @@ const AddProducts = () => {
   }, []);
 
   const handleAddProduct = (data) => {
+    setProcessing(true);
     data.sellerName = user.displayName;
     data.sellerEmail = user.email;
     data.postDate = format(new Date(), "PP");
@@ -61,6 +62,7 @@ const AddProducts = () => {
         if (data.acknowledged) {
           toast.success("Product Added Successfully.");
           reset();
+          setProcessing(false);
         }
       });
   };
@@ -186,9 +188,10 @@ const AddProducts = () => {
           placeholder="Description"
           {...register("description", { required: true })}
         ></textarea>
-        <button type="submit" className="btn btn-primary">
+        <button type="submit" className="btn btn-primary" disabled={processing}>
           Add
         </button>
+        {processing && <progress className="progress w-full"></progress>}
       </form>
     </div>
   );
