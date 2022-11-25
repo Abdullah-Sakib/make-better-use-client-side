@@ -3,12 +3,14 @@ import { format } from "date-fns/esm";
 import React, { useContext, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../../../Contexts/AuthProvider/AuthProvider";
 
 const AddProducts = () => {
   const { user } = useContext(AuthContext);
   const [categories, setCategories] = useState([]);
   const [processing, setProcessing] = useState(false);
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -63,6 +65,7 @@ const AddProducts = () => {
           toast.success("Product Added Successfully.");
           reset();
           setProcessing(false);
+          navigate('/dashboard/myproducts');
         }
       });
   };

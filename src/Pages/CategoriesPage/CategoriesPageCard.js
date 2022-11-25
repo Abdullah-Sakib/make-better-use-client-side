@@ -10,7 +10,7 @@ const CategoriesPageCard = ({ product, setSelectedProduct }) => {
     yearsOfUse,
     postDate,
     sellerName,
-    image
+    image,
   } = product;
   return (
     <div>
@@ -36,13 +36,19 @@ const CategoriesPageCard = ({ product, setSelectedProduct }) => {
           <p className="text-base">
             Years of use : <span className="font-bold">{yearsOfUse}</span>
           </p>
-            <p className="text-base">Seller : {sellerName}</p>
+          <p className="text-base">Seller : {sellerName}</p>
           <div className="flex justify-between items-center">
             <p className="text-base">Post Time : {postDate}</p>
             <button className="btn btn-xs">Report</button>
           </div>
           <div className="card-actions justify-end">
-            <label htmlFor="booking-modal"  onClick={() => setSelectedProduct(product)} className="btn btn-primary">Book Now</label>
+            <label
+              htmlFor="booking-modal"
+              onClick={() => setSelectedProduct(product)}
+              className="btn btn-primary"
+            >
+              Book Now
+            </label>
           </div>
         </div>
       </div>

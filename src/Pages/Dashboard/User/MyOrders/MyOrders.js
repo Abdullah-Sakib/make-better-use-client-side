@@ -36,14 +36,18 @@ const MyOrders = () => {
               </p>
 
               <div className="card-actions justify-end">
-                <Link to={`/dashboard/checkout/${order._id}`}>
-                  <label
-                    htmlFor="booking-modal"
-                    className="btn btn-sm px-5 btn-primary"
-                  >
-                    Pay
-                  </label>
-                </Link>
+                {order?.paid ? (
+                  <span className="text-lg text-success font-bold mr-2">Paid</span>
+                ) : (
+                  <Link to={`/dashboard/checkout/${order._id}`}>
+                    <label
+                      htmlFor="booking-modal"
+                      className="btn btn-sm px-5 btn-primary"
+                    >
+                      Pay
+                    </label>
+                  </Link>
+                )}
               </div>
             </div>
           </div>

@@ -11,6 +11,7 @@ const CheckoutForm = ({product}) => {
   const [transectionId, setTransectionId] = useState('');
   const [processing, setProcessing] = useState(false);
 
+
   useEffect(() => {
     fetch("http://localhost:5000/create-payment-intent", {
       method: "POST",
@@ -69,7 +70,15 @@ const CheckoutForm = ({product}) => {
     if(paymentIntent.status === 'succeeded'){
       setSuccess('Congratulations!! Your payment has been successfull.');
       toast.success('Payment successful.');
-      setTransectionId(paymentIntent.id)
+      setTransectionId(paymentIntent.id);
+      fetch(`http://localhost:5000/bookedProducts/${product._id}`, {
+        method: "PATCH",
+        headers: {
+          'content-type': 'application/json'
+        }
+      })
+      .then(res => res.json())
+      .then(data => console.log(data))
     }
 
     setProcessing(false);
