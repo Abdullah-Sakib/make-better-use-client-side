@@ -1,6 +1,7 @@
 import React from "react";
 import { Link, Outlet } from "react-router-dom";
 import Navbar from "../../Pages/Shared/Navbar/Navbar";
+import './DashboardLayout.css'
 
 const DashboardLayout = () => {
   return (
@@ -8,7 +9,7 @@ const DashboardLayout = () => {
       <Navbar></Navbar>
       <div className="drawer drawer-mobile  ">
         <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
-        <div className="drawer-content p-5 bg-slate-200" >
+        <div className="drawer-content p-5 bg-slate-200" id="dashboard">
           {/* <!-- Page content here --> */}
           <Outlet></Outlet>
           <label
