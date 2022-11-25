@@ -9,6 +9,8 @@ const CategoriesPage = () => {
   const products = useLoaderData();
   const [selectedProduct, setSelectedProduct] = useState(null);
 
+  console.log(products);
+
   const handleBooking = (event) => {
     event.preventDefault();
     const form = event.target;
@@ -27,6 +29,7 @@ const CategoriesPage = () => {
       userPhoneNumber,
       meetingLocation,
       productImage: selectedProduct?.image,
+      productId: selectedProduct?._id,
     }
 
     fetch(`http://localhost:5000/bookedProducts`, {
@@ -38,7 +41,6 @@ const CategoriesPage = () => {
     })
     .then(res => res.json())
     .then(data => {
-      console.log(data)
       if(data.acknowledged){
         toast.success('Booking successfull. Please check My Orders and complete your payment.')
       }
