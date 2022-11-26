@@ -6,6 +6,7 @@ const MyProducts = () => {
   const {
     data: products = [],
     refetch,
+    isLoading
   } = useQuery({
     queryKey: ["sellerProducts"],
     queryFn: () =>
@@ -17,7 +18,6 @@ const MyProducts = () => {
       }).then((res) => res.json()),
   });
 
-  console.log(products);
 
   const handleDeleteProduct = (id) => {
     const agree = window.confirm(
@@ -56,6 +56,10 @@ const MyProducts = () => {
         });
     }
   };
+
+  if(isLoading){
+    return 
+  }
 
   return (
     <div>

@@ -18,12 +18,16 @@ const Advertisement = () => {
     return
   }
 
+  if(isLoading){
+    return
+  }
+
   return (
     <div className="px-24 mb-22 mt-24">
       <div className="grid grid-cols-3 gap-10">
 
         {products?.map((product) => (
-          <div className="card card-compact rounded-lg bg-base-100 shadow-xl">
+          <div key={product?._id} className="card card-compact rounded-lg bg-base-100 shadow-xl">
             <figure className="h-52">
               <img src={product.image} alt="Shoes" />
             </figure>

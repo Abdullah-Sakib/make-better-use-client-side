@@ -9,7 +9,6 @@ const CategoriesPage = () => {
   const products = useLoaderData();
   const [selectedProduct, setSelectedProduct] = useState(null);
 
-  console.log(products);
 
   const handleBooking = (event) => {
     event.preventDefault();

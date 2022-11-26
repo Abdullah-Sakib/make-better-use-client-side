@@ -1,5 +1,7 @@
 import React from "react";
+import toast from "react-hot-toast";
 import { GoLocation } from "react-icons/go";
+import { MdVerified } from "react-icons/md";
 
 const CategoriesPageCard = ({ product, setSelectedProduct }) => {
   const {
@@ -11,7 +13,42 @@ const CategoriesPageCard = ({ product, setSelectedProduct }) => {
     postDate,
     sellerName,
     image,
+    verifiedSeller,
+    _id,
   } = product;
+
+  const handleReport = () => {
+    const agree = window.confirm('Are you sure you want to report this product?');
+    if(!agree){
+      return;
+    };
+    const reportedItem = {
+      productId: _id,
+      name,
+      location,
+      resellPrice,
+      originalPrice,
+      yearsOfUse,
+      postDate,
+      sellerName,
+      image,
+      verifiedSeller,
+    };
+    fetch('http://localhost:5000/reportedItems', {
+      method: 'POST',
+      headers: {
+        'content-type':'application/json'
+      },
+      body: JSON.stringify(reportedItem)
+    })
+    .then(res => res.json())
+    .then(data => {
+      if(data.acknowledged){
+        toast.success("This product has been roported to Admin.")
+      }
+    })
+  };
+
   return (
     <div>
       <div className="card card-compact rounded-lg bg-base-100 shadow-xl">
@@ -36,10 +73,22 @@ const CategoriesPageCard = ({ product, setSelectedProduct }) => {
           <p className="text-base">
             Years of use : <span className="font-bold">{yearsOfUse}</span>
           </p>
-          <p className="text-base">Seller : {sellerName}</p>
+          <p className="text-base">
+            Seller :{" "}
+            {!verifiedSeller ? (
+              <span>{sellerName}</span>
+            ) : (
+              <span className="">
+                {sellerName}{" "}
+                <MdVerified className="text-blue-500 ml-1 inline"></MdVerified>
+              </span>
+            )}{" "}
+          </p>
           <div className="flex justify-between items-center">
             <p className="text-base">Post Time : {postDate}</p>
-            <button className="btn btn-xs">Report</button>
+            <button onClick={handleReport} className="btn btn-xs">
+              Report
+            </button>
           </div>
           <div className="card-actions justify-end">
             <label
