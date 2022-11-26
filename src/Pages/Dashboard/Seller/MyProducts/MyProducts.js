@@ -5,7 +5,6 @@ import toast from "react-hot-toast";
 const MyProducts = () => {
   const {
     data: products = [],
-    isLoading,
     refetch,
   } = useQuery({
     queryKey: ["sellerProducts"],
@@ -17,6 +16,8 @@ const MyProducts = () => {
         },
       }).then((res) => res.json()),
   });
+
+  console.log(products);
 
   const handleDeleteProduct = (id) => {
     const agree = window.confirm(

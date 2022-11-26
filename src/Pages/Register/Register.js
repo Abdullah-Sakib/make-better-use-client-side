@@ -55,7 +55,7 @@ const Register = () => {
     const userData = {
       name: data.fullname,
       email: data.email,
-      seller: `${data?.seller ? 'seller': 'user'}`
+      role: `${data?.seller ? 'seller': 'user'}`
     };
     fetch('http://localhost:5000/users', {
       method: 'POST',
