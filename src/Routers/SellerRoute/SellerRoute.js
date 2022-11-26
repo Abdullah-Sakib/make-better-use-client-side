@@ -4,7 +4,7 @@ import { AuthContext } from '../../Contexts/AuthProvider/AuthProvider';
 import useUserRole from '../../CustomHooks/useUserRole/useUserRole';
 
 const SellerRoute = ({children}) => {
-  const { user, loading } = useContext(AuthContext);
+  const { user, loading, logOut } = useContext(AuthContext);
   const {role, roleLoading} = useUserRole();
   const location = useLocation();
 
@@ -12,12 +12,10 @@ const SellerRoute = ({children}) => {
     return <progress className="progress w-full"></progress>;
   }
 
-  console.log(role);
-
   if (user && role === 'seller') {
     return children;
   }
-
+  logOut();
   return <Navigate to="/login" state={{ from: location }} replace></Navigate>;
 };
 

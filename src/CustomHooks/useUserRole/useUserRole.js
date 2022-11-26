@@ -9,17 +9,21 @@ const useUserRole = () => {
       authorization: `bearer ${localStorage.getItem("accessToken")}`,
     },
   })
-    .then((res) => res.json())
-    .then((data) => {
-        setRole(data?.role);
-        setRoleLoading(false);
+    .then((res) => {
+      if (res.status === 401 || res.status === 403) {
+        return;
+      }
+      return res.json();
     })
-    .catch(error => {
-      console.log(error);
+    .then((data) => {
+      setRole(data?.role);
       setRoleLoading(false);
     })
+    .catch((error) => {
+      setRoleLoading(false);
+    });
 
-  return {role, roleLoading};
+  return { role, roleLoading };
 };
 
 export default useUserRole;

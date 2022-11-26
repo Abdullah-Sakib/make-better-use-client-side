@@ -12,7 +12,12 @@ const MyOrders = () => {
         headers: {
           authorization: `bearer ${localStorage.getItem('accessToken')}`,
         },
-      }).then((res) => res.json()),
+      }).then((res) => {
+        if(res.status === 401 || res.status === 403){
+          return [];
+        }
+        return res.json()
+      }),
   });
 
 

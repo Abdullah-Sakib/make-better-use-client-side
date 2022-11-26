@@ -15,11 +15,13 @@ import PrivetRoute from "../PrivetRoute/PrivetRoute";
 import Checkout from "../../Pages/Checkout/Checkout";
 import AdminRoute from "../AdminRoute/AdminRoute";
 import SellerRoute from "../SellerRoute/SellerRoute";
+import ErrorPage from "../../Pages/ErrorPage/ErrorPage";
 
 export const router = createBrowserRouter([
   {
     path: '/',
     element: <Main></Main>,
+    errorElement: <ErrorPage></ErrorPage>,
     children: [
       {
         path: '/',
@@ -47,6 +49,7 @@ export const router = createBrowserRouter([
   {
     path: '/dashboard',
     element: <DashboardLayout></DashboardLayout>,
+    errorElement: <ErrorPage></ErrorPage>,
     children: [
       {
         path: '/dashboard',

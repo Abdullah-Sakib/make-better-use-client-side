@@ -1,9 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
-import React, { useState } from "react";
+import React  from "react";
 import toast from "react-hot-toast";
 
 const AllSellers = () => {
-  const [loading, setLoading] = useState(false);
   const {
     data: sellers = [],
     refetch,
