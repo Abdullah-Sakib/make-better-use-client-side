@@ -3,23 +3,40 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 const MyOrders = () => {
+
   const { data: orders = [], isLoading } = useQuery({
     queryKey: ["myorders"],
     queryFn: () =>
       fetch(`http://localhost:5000/bookedProducts`, {
         method: "GET",
         headers: {
-          authorization: `bearer ${localStorage.getItem("accessToken")}`,
+          authorization: `bearer ${localStorage.getItem('accessToken')}`,
         },
       }).then((res) => res.json()),
   });
+
+
+  if(isLoading){
+    return
+  }
+
+
+  if (orders.length === 0) {
+    return (
+      <div className="min-h-[80vh] flex items-center justify-center">
+        <h2 className="text-2xl font-bold">Please Book Some Products.</h2>
+      </div>
+    );
+  }
+
+  console.log(orders);
 
   return (
     <div>
       <div className="grid grid-cols-3 gap-10">
         {orders?.map((order) => (
           <div
-            key={order._id}
+            key={order?._id}
             className="card card-compact rounded-lg bg-base-100 shadow-xl"
           >
             <figure className="h-44">
@@ -37,7 +54,9 @@ const MyOrders = () => {
 
               <div className="card-actions justify-end">
                 {order?.paid ? (
-                  <span className="text-lg text-success font-bold mr-2">Paid</span>
+                  <span className="text-lg text-success font-bold mr-2">
+                    Paid
+                  </span>
                 ) : (
                   <Link to={`/dashboard/checkout/${order._id}`}>
                     <label

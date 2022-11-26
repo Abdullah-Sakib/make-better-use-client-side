@@ -11,7 +11,11 @@ const AllSellers = () => {
   } = useQuery({
     queryKey: ["allsellers"],
     queryFn: () =>
-      fetch("http://localhost:5000/users/seller").then((res) => res.json()),
+      fetch("http://localhost:5000/users/seller",{
+        headers: {
+          authorization: `bearer ${localStorage.getItem('accessToken')}`
+        }
+      }).then((res) => res.json()),
   });
 
   const handleDeleteSeller = (id) => {
@@ -21,6 +25,9 @@ const AllSellers = () => {
     }
     fetch(`http://localhost:5000/users/${id}`, {
       method: "DELETE",
+      headers: {
+        authorization: `bearer ${localStorage.getItem('accessToken')}`
+      }
     })
       .then((res) => res.json())
       .then((data) => {
@@ -40,6 +47,7 @@ const AllSellers = () => {
       method: "PATCH",
       headers: {
         "content-type": "application/json",
+        authorization: `bearer ${localStorage.getItem('accessToken')}`
       },
     })
       .then((res) => res.json())
@@ -53,6 +61,14 @@ const AllSellers = () => {
 
   if (isLoading) {
     return;
+  }
+
+  if(sellers.length === 0){
+    return (
+      <div className="min-h-[80vh] flex items-center justify-center">
+        <h2 className="text-2xl font-bold">No Sellers Found!!</h2>
+      </div>
+    )
   }
 
   return (

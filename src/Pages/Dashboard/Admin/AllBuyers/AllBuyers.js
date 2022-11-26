@@ -6,13 +6,20 @@ const AllBuyers = () => {
   const { data: buyers = [], refetch, isLoading } = useQuery({
     queryKey: ["allsellers"],
     queryFn: () =>
-      fetch("http://localhost:5000/users/user").then((res) => res.json()),
+      fetch("http://localhost:5000/users/user", {
+        headers: {
+          authorization: `bearer ${localStorage.getItem('accessToken')}`
+        }
+      }).then((res) => res.json()),
   });
   console.log(buyers);
 
   const handleDeleteBuyer = id => {
     fetch(`http://localhost:5000/users/${id}`,{
-      method: "DELETE"
+      method: "DELETE",
+      headers: {
+        authorization: `bearer ${localStorage.getItem('accessToken')}`
+      }
     })
     .then(res => res.json())
     .then(data => {
@@ -25,6 +32,14 @@ const AllBuyers = () => {
  
   if(isLoading){
     return
+  };
+
+  if(buyers.length === 0){
+    return (
+      <div className="min-h-[80vh] flex items-center justify-center">
+        <h2 className="text-2xl font-bold">No Buyers Found!!</h2>
+      </div>
+    )
   }
 
   return (

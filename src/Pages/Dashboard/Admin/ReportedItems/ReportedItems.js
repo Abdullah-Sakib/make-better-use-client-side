@@ -6,13 +6,20 @@ const ReportedItems = () => {
   const { data: reportedItems = [], refetch } = useQuery({
     queryKey: ["reporteItems"],
     queryFn: () =>
-      fetch("http://localhost:5000/reportedItems").then((res) => res.json()),
+    fetch("http://localhost:5000/reportedItems", {
+      headers: {
+        authorization: `bearer ${localStorage.getItem('accessToken')}`
+      }
+    }).then((res) => res.json()),
   });
 
 
   const handleDelete = (id, productId) => {
     fetch(`http://localhost:5000/reportedItems?id=${id}&productId=${productId}`, {
       method: 'DELETE',
+      headers: {
+        authorization: `bearer ${localStorage.getItem('accessToken')}`
+      }
     })
     .then(res => res.json())
     .then(data => {
@@ -21,6 +28,14 @@ const ReportedItems = () => {
         refetch();
       }
     })
+  };
+
+  if(reportedItems.length === 0){
+    return (
+      <div className="min-h-[80vh] flex items-center justify-center">
+        <h2 className="text-2xl font-bold">No items found!!</h2>
+      </div>
+    )
   }
 
   return (
@@ -40,7 +55,7 @@ const ReportedItems = () => {
             </thead>
             <tbody>
               {reportedItems?.map((item, i) => (
-                <tr>
+                <tr key={item?._id}>
                   <th>{i + 1}</th>
                   <th>
                     <div className="avatar">

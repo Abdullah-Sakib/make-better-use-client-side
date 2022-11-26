@@ -24,6 +24,7 @@ const Advertisement = () => {
 
   return (
     <div className="px-24 mb-22 mt-24">
+        <h2 className="text-3xl font-bold mb-5">Advertised products</h2>
       <div className="grid grid-cols-3 gap-10">
 
         {products?.map((product) => (

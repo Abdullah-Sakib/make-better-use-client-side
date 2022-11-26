@@ -14,7 +14,10 @@ const CheckoutForm = ({product}) => {
   useEffect(() => {
     fetch("http://localhost:5000/create-payment-intent", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+         "Content-Type": "application/json",
+         authorization: `bearer ${localStorage.getItem('accessToken')}`
+         },
       body: JSON.stringify({price: product?.productPrice}),
     })
       .then((res) => res.json())
@@ -70,10 +73,12 @@ const CheckoutForm = ({product}) => {
       setSuccess('Congratulations!! Your payment has been successfull.');
       toast.success('Payment successful.');
       setTransectionId(paymentIntent.id);
+
       fetch(`http://localhost:5000/bookedProducts?mainProductId=${product.productId}&bookedProductId=${product._id}`, {
         method: "PATCH",
         headers: {
-          'content-type': 'application/json'
+          'content-type': 'application/json',
+          authorization: `bearer ${localStorage.getItem('accessToken')}`
         }
       })
       .then(res => res.json())

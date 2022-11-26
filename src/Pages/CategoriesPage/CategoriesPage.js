@@ -9,7 +9,6 @@ const CategoriesPage = () => {
   const products = useLoaderData();
   const [selectedProduct, setSelectedProduct] = useState(null);
 
-
   const handleBooking = (event) => {
     event.preventDefault();
     const form = event.target;
@@ -19,7 +18,7 @@ const CategoriesPage = () => {
     const productPrice = form.productPrice.value;
     const userPhoneNumber = form.userPhoneNumber.value;
     const meetingLocation = form.meetingLocation.value;
-    
+
     const bookingData = {
       userName,
       userEmail,
@@ -29,21 +28,24 @@ const CategoriesPage = () => {
       meetingLocation,
       productImage: selectedProduct?.image,
       productId: selectedProduct?._id,
-    }
+    };
 
     fetch(`http://localhost:5000/bookedProducts`, {
-      method: 'POST',
+      method: "POST",
       headers: {
-        'content-type': 'application/json'
+        "content-type": "application/json",
+        authorization: `bearer ${localStorage.getItem("accessToken")}`,
       },
-      body: JSON.stringify(bookingData)
+      body: JSON.stringify(bookingData),
     })
-    .then(res => res.json())
-    .then(data => {
-      if(data.acknowledged){
-        toast.success('Booking successfull. Please check My Orders and complete your payment.')
-      }
-    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.acknowledged) {
+          toast.success(
+            "Booking successfull. Please check My Orders and complete your payment."
+          );
+        }
+      });
 
     setSelectedProduct(null);
   };
@@ -115,7 +117,10 @@ const CategoriesPage = () => {
                   className="input input-bordered w-full mb-3"
                   required
                 />
-                <button htmlFor="booking-modal" className="btn btn-primary w-full">
+                <button
+                  htmlFor="booking-modal"
+                  className="btn btn-primary w-full"
+                >
                   Submit
                 </button>
               </form>

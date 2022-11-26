@@ -6,7 +6,7 @@ const MyProducts = () => {
   const {
     data: products = [],
     refetch,
-    isLoading
+    isLoading,
   } = useQuery({
     queryKey: ["sellerProducts"],
     queryFn: () =>
@@ -18,7 +18,6 @@ const MyProducts = () => {
       }).then((res) => res.json()),
   });
 
-
   const handleDeleteProduct = (id) => {
     const agree = window.confirm(
       "Are you sure you want to delete this product?"
@@ -26,6 +25,9 @@ const MyProducts = () => {
     if (agree) {
       fetch(`http://localhost:5000/products/${id}`, {
         method: "DELETE",
+        headers: {
+          authorization: `bearer ${localStorage.getItem("accessToken")}`,
+        },
       })
         .then((res) => res.json())
         .then((data) => {
@@ -46,19 +48,28 @@ const MyProducts = () => {
         method: "PATCH",
         headers: {
           "content-type": "application/json",
+          authorization: `bearer ${localStorage.getItem("accessToken")}`,
         },
       })
         .then((res) => res.json())
         .then((data) => {
-          if(data.modifiedCount > 0){
+          if (data.modifiedCount > 0) {
             toast.success("Your product has been advertised");
           }
         });
     }
   };
 
-  if(isLoading){
-    return 
+  if (isLoading) {
+    return;
+  }
+
+  if (products.length === 0) {
+    return (
+      <div className="min-h-[80vh] flex items-center justify-center">
+        <h2 className="text-2xl font-bold">No Products Found</h2>
+      </div>
+    );
   }
 
   return (

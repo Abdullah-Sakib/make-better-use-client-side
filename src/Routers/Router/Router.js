@@ -13,6 +13,8 @@ import Register from "../../Pages/Register/Register";
 import CategoriesPage from '../../Pages/CategoriesPage/CategoriesPage'
 import PrivetRoute from "../PrivetRoute/PrivetRoute";
 import Checkout from "../../Pages/Checkout/Checkout";
+import AdminRoute from "../AdminRoute/AdminRoute";
+import SellerRoute from "../SellerRoute/SellerRoute";
 
 export const router = createBrowserRouter([
   {
@@ -34,7 +36,11 @@ export const router = createBrowserRouter([
       {
         path: 'categories/:name',
         element: <PrivetRoute><CategoriesPage></CategoriesPage></PrivetRoute>,
-        loader: ({params}) => fetch(`http://localhost:5000/products?name=${params.name}`)
+        loader: ({params}) => fetch(`http://localhost:5000/products?name=${params.name}`, {
+          headers: {
+            authorization: `bearer ${localStorage.getItem('accessToken')}`
+          }
+        })
       },
     ]
   },
@@ -44,32 +50,36 @@ export const router = createBrowserRouter([
     children: [
       {
         path: '/dashboard',
-        element: <MyOrders></MyOrders>
+        element: <PrivetRoute><MyOrders></MyOrders></PrivetRoute>
       },
       {
         path: '/dashboard/myproducts',
-        element: <MyProducts></MyProducts>
+        element: <SellerRoute><MyProducts></MyProducts></SellerRoute>
       },
       {
         path: '/dashboard/addproduct',
-        element: <AddProducts></AddProducts>
+        element: <SellerRoute><AddProducts></AddProducts></SellerRoute>
       },
       {
         path: '/dashboard/allsellers',
-        element: <AllSellers></AllSellers>
+        element: <AdminRoute><AllSellers></AllSellers></AdminRoute>
       },
       {
         path: '/dashboard/allbuyers',
-        element: <AllBuyers></AllBuyers>
+        element: <AdminRoute><AllBuyers></AllBuyers></AdminRoute>
       },
       {
         path: '/dashboard/reporteditems',
-        element: <ReportedItems></ReportedItems>
+        element: <AdminRoute><ReportedItems></ReportedItems></AdminRoute>
       },
       {
         path: '/dashboard/checkout/:id',
         element: <Checkout></Checkout>,
-        loader: ({params}) => fetch(`http://localhost:5000/bookedProducts/${params.id}`)
+        loader: ({params}) => fetch(`http://localhost:5000/bookedProducts/${params.id}`, {
+          headers: {
+            authorization: `bearer ${localStorage.getItem('accessToken')}`
+          }
+        })
       },
     ]
   }

@@ -11,15 +11,15 @@ const AddProducts = () => {
   const [categories, setCategories] = useState([]);
   const [processing, setProcessing] = useState(false);
   const navigate = useNavigate();
-  const {
-    register,
-    handleSubmit,
-    reset,
-  } = useForm();
+  const { register, handleSubmit, reset } = useForm();
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/categories")
+      .get("http://localhost:5000/categories", {
+        headers: {
+          authorization: `bearer ${localStorage.getItem("accessToken")}`,
+        },
+      })
       .then((result) => {
         setCategories(result.data);
       })
@@ -56,6 +56,7 @@ const AddProducts = () => {
       method: "POST",
       headers: {
         "content-type": "application/json",
+        authorization: `bearer ${localStorage.getItem("accessToken")}`,
       },
       body: JSON.stringify(data),
     })
@@ -65,7 +66,7 @@ const AddProducts = () => {
           toast.success("Product Added Successfully.");
           reset();
           setProcessing(false);
-          navigate('/dashboard/myproducts');
+          navigate("/dashboard/myproducts");
         }
       });
   };
