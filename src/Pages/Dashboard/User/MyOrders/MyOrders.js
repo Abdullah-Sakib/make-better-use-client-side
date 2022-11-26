@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import React from "react";
 import { Link } from "react-router-dom";
+import LoadingSpinner from "../../../../Components/LoadingSpinner/LoadingSpinner";
 
 const MyOrders = () => {
 
@@ -22,7 +23,7 @@ const MyOrders = () => {
 
 
   if(isLoading){
-    return
+    return <LoadingSpinner></LoadingSpinner>
   }
 
 

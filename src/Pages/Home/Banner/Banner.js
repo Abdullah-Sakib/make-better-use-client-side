@@ -10,13 +10,10 @@ const Banner = () => {
         <div className="hero-overlay bg-opacity-60"></div>
         <div className="hero-content text-center text-neutral-content">
           <div className="max-w-md">
-            <h1 className="mb-5 text-5xl font-bold">Hello there</h1>
-            <p className="mb-5">
-              Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda
-              excepturi exercitationem quasi. In deleniti eaque aut repudiandae
-              et a id nisi.
+            <h1 className="mb-5 text-5xl font-bold">Make Better Use</h1>
+            <p className="mb-5 text-gray-300">
+              Sell and buy used cameras, lenses, accessories, and other equipment at prices you can feel good about, and turn them into new opportunities—for you and your fellow photographers.
             </p>
-            <button className="btn btn-primary">Get Started</button>
           </div>
         </div>
       </div>

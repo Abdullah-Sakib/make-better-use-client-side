@@ -1,13 +1,19 @@
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import React from "react";
-import { useLoaderData } from "react-router-dom";
+import { useLoaderData, useNavigation } from "react-router-dom";
+import LoadingSpinner from "../../Components/LoadingSpinner/LoadingSpinner";
 import CheckoutForm from "./CheckoutForm";
 
 const stripePromise = loadStripe(process.env.REACT_APP_stripe_pk);
 
 const Checkout = () => {
   const product = useLoaderData();
+  const navigation = useNavigation();
+
+  if(navigation.state === "loading"){
+    return <LoadingSpinner></LoadingSpinner>
+  }
 
   return (
     <div>

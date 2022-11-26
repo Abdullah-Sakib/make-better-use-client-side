@@ -1,13 +1,19 @@
 import React, { useContext, useState } from "react";
 import toast from "react-hot-toast";
-import { useLoaderData } from "react-router-dom";
+import { useLoaderData, useNavigation } from "react-router-dom";
+import LoadingSpinner from "../../Components/LoadingSpinner/LoadingSpinner";
 import { AuthContext } from "../../Contexts/AuthProvider/AuthProvider";
 import CategoriesPageCard from "./CategoriesPageCard";
 
 const CategoriesPage = () => {
   const { user } = useContext(AuthContext);
   const products = useLoaderData();
+  const navigation = useNavigation();
   const [selectedProduct, setSelectedProduct] = useState(null);
+
+  if(navigation.state === "loading"){
+    return <LoadingSpinner></LoadingSpinner>
+  };
 
   const handleBooking = (event) => {
     event.preventDefault();

@@ -1,9 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
 import React from "react";
 import toast from "react-hot-toast";
+import LoadingSpinner from "../../../../Components/LoadingSpinner/LoadingSpinner";
 
 const ReportedItems = () => {
-  const { data: reportedItems = [], refetch } = useQuery({
+  const { data: reportedItems = [], refetch , isLoading} = useQuery({
     queryKey: ["reporteItems"],
     queryFn: () =>
     fetch("http://localhost:5000/reportedItems", {
@@ -36,6 +37,10 @@ const ReportedItems = () => {
         <h2 className="text-2xl font-bold">No items found!!</h2>
       </div>
     )
+  }
+
+  if(isLoading){
+    return <LoadingSpinner></LoadingSpinner>
   }
 
   return (

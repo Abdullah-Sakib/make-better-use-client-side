@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import React from "react";
 import toast from "react-hot-toast";
+import LoadingSpinner from "../../../../Components/LoadingSpinner/LoadingSpinner";
 
 const AllBuyers = () => {
   const { data: buyers = [], refetch, isLoading } = useQuery({
@@ -30,7 +31,7 @@ const AllBuyers = () => {
   }
  
   if(isLoading){
-    return
+    return <LoadingSpinner></LoadingSpinner>
   };
 
   if(buyers.length === 0){

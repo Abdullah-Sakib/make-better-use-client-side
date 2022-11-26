@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import React  from "react";
 import toast from "react-hot-toast";
+import LoadingSpinner from "../../../../Components/LoadingSpinner/LoadingSpinner";
 
 const AllSellers = () => {
   const {
@@ -59,7 +60,7 @@ const AllSellers = () => {
   };
 
   if (isLoading) {
-    return;
+    return <LoadingSpinner></LoadingSpinner>
   }
 
   if(sellers.length === 0){

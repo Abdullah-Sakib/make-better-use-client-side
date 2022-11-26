@@ -16,6 +16,7 @@ import Checkout from "../../Pages/Checkout/Checkout";
 import AdminRoute from "../AdminRoute/AdminRoute";
 import SellerRoute from "../SellerRoute/SellerRoute";
 import ErrorPage from "../../Pages/ErrorPage/ErrorPage";
+import Blogs from "../../Pages/Blogs/Blogs";
 
 export const router = createBrowserRouter([
   {
@@ -26,6 +27,10 @@ export const router = createBrowserRouter([
       {
         path: '/',
         element: <Home></Home>
+      },
+      {
+        path: 'blogs',
+        element: <Blogs></Blogs>
       },
       {
         path: 'login',

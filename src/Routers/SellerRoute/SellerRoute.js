@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import { Navigate, useLocation } from 'react-router-dom';
+import LoadingSpinner from '../../Components/LoadingSpinner/LoadingSpinner';
 import { AuthContext } from '../../Contexts/AuthProvider/AuthProvider';
 import useUserRole from '../../CustomHooks/useUserRole/useUserRole';
 
@@ -9,7 +10,7 @@ const SellerRoute = ({children}) => {
   const location = useLocation();
 
   if (loading || roleLoading) {
-    return <progress className="progress w-full"></progress>;
+    return <LoadingSpinner></LoadingSpinner>
   }
 
   if (user && role === 'seller') {
