@@ -76,7 +76,7 @@ const AddProducts = () => {
       <h2 className="text-2xl font-semibold mb-4">Add a product</h2>
       <form
         onSubmit={handleSubmit(handleAddProduct)}
-        className="flex flex-col md:w-1/2 p-5 bg-base-100 rounded-lg"
+        className="flex flex-col md:w-2/3 p-5 bg-slate-100 rounded-lg mb-10"
       >
         <label className="label font-semibold">Image</label>
         <input

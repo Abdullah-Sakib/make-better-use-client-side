@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import React from "react";
 import toast from "react-hot-toast";
+import { BsFillArrowRightSquareFill } from "react-icons/bs";
 import LoadingSpinner from "../../../../Components/LoadingSpinner/LoadingSpinner";
 
 const AllBuyers = () => {
@@ -36,15 +37,34 @@ const AllBuyers = () => {
 
   if(buyers.length === 0){
     return (
-      <div className="min-h-[80vh] flex items-center justify-center">
-        <h2 className="text-2xl font-bold">No Buyers Found!!</h2>
+      <div>
+        <div className="flex justify-between items-center mb-5">
+          <h2 className="text-2xl font-semibold">All Buyers</h2>
+          <label
+            htmlFor="dashboard-drawer"
+            className=" drawer-button lg:hidden"
+          >
+            <BsFillArrowRightSquareFill className="text-3xl"></BsFillArrowRightSquareFill>
+          </label>
+        </div>
+        <div className="min-h-[70vh] flex items-center justify-center">
+          <h2 className="text-2xl font-bold">No Buyers Found!!</h2>
+        </div>
       </div>
     )
   }
 
   return (
     <div>
-      <h2 className="text-2xl font-semibold mb-5">All Buyers</h2>
+      <div className="flex justify-between items-center mb-5">
+        <h2 className="text-2xl font-semibold">My Buyers</h2>
+        <label
+          htmlFor="dashboard-drawer"
+          className=" drawer-button lg:hidden"
+        >
+          <BsFillArrowRightSquareFill className="text-3xl"></BsFillArrowRightSquareFill>
+        </label>
+      </div>
       <div>
         <div className="overflow-x-auto">
           <table className="table w-full">

@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import React from "react";
 import toast from "react-hot-toast";
+import { BsFillArrowRightSquareFill } from "react-icons/bs";
 import LoadingSpinner from "../../../../Components/LoadingSpinner/LoadingSpinner";
 
 const ReportedItems = () => {
@@ -45,7 +46,15 @@ const ReportedItems = () => {
 
   return (
     <div>
-      <h2 className="text-2xl font-semibold mb-5">Reported Items</h2>
+      <div className="flex justify-between items-center mb-5">
+        <h2 className="text-2xl font-semibold">Reported Items</h2>
+        <label
+          htmlFor="dashboard-drawer"
+          className=" drawer-button lg:hidden"
+        >
+          <BsFillArrowRightSquareFill className="text-3xl"></BsFillArrowRightSquareFill>
+        </label>
+      </div>
       <div>
         <div className="overflow-x-auto">
           <table className="table w-full">

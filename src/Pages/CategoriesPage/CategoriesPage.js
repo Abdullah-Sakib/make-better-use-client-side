@@ -11,9 +11,9 @@ const CategoriesPage = () => {
   const navigation = useNavigation();
   const [selectedProduct, setSelectedProduct] = useState(null);
 
-  if(navigation.state === "loading"){
-    return <LoadingSpinner></LoadingSpinner>
-  };
+  if (navigation.state === "loading") {
+    return <LoadingSpinner></LoadingSpinner>;
+  }
 
   const handleBooking = (event) => {
     event.preventDefault();
@@ -57,14 +57,14 @@ const CategoriesPage = () => {
   };
 
   return (
-    <div className="container mx-auto my-16 lg:px-8 min-h-[80vh] grid grid-cols-3 gap-10">
-      {products?.map((product) => (
-        <CategoriesPageCard
-          key={product._id}
-          product={product}
-          setSelectedProduct={setSelectedProduct}
-        ></CategoriesPageCard>
-      ))}
+    <div className="container mx-auto my-16 lg:px-8 min-h-[80vh] grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 px-5 ">
+        {products?.map((product) => (
+          <CategoriesPageCard
+            key={product._id}
+            product={product}
+            setSelectedProduct={setSelectedProduct}
+          ></CategoriesPageCard>
+        ))}
       {selectedProduct && (
         <div>
           <input type="checkbox" id="booking-modal" className="modal-toggle" />
@@ -127,7 +127,7 @@ const CategoriesPage = () => {
                   htmlFor="booking-modal"
                   className="btn btn-primary w-full"
                 >
-                  Submit
+                  Book
                 </button>
               </form>
             </div>

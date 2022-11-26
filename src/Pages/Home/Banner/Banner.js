@@ -12,7 +12,7 @@ const Banner = () => {
           <div className="max-w-md">
             <h1 className="mb-5 text-5xl font-bold">Make Better Use</h1>
             <p className="mb-5 text-gray-300">
-              Sell and buy used cameras, lenses, accessories, and other equipment at prices you can feel good about, and turn them into new opportunities—for you and your fellow photographers.
+              Sale and buy used cameras, lenses, accessories, and other equipment at prices you can feel good about, and turn them into new opportunities—for you and your fellow photographers.
             </p>
           </div>
         </div>

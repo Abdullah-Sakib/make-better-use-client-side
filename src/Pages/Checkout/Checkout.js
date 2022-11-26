@@ -18,8 +18,9 @@ const Checkout = () => {
   return (
     <div>
       <h2 className="text-2xl font-semibold">
-        Checkout for {product.productName}
+        Checkout for - {product?.productName}
       </h2>
+      <p className="text-lg font-semibold mt-4">Your card will be charged - ${product?.productPrice}</p>
       <div className="w-1/2">
         <Elements stripe={stripePromise}>
           <CheckoutForm product={product} />

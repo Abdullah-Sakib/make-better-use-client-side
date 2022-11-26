@@ -26,12 +26,10 @@ const Navbar = () => {
           >
             <MdOutlineCameraswitch className="text-3xl text-white mr-2"></MdOutlineCameraswitch>
             <span className="ml-2 text-xl font-bold tracking-wide text-gray-100 uppercase">
-            Make Better Use
+              Make Better Use
             </span>
           </Link>
           <ul className="items-center hidden space-x-8 lg:flex">
-           
-            
             <li>
               <Link
                 to="/blogs"
@@ -41,7 +39,7 @@ const Navbar = () => {
                 Blogs
               </Link>
             </li>
-           
+
             <li>
               {user ? (
                 <div className="flex items-center">
@@ -110,24 +108,17 @@ const Navbar = () => {
                         title="Company"
                         className="inline-flex items-center"
                       >
-                        <svg
-                          className="w-8 text-deep-purple-accent-400"
-                          viewBox="0 0 24 24"
-                          strokeLinejoin="round"
-                          strokeWidth="2"
-                          strokeLinecap="round"
-                          strokeMiterlimit="10"
-                          stroke="currentColor"
-                          fill="none"
+                        <Link
+                          to="/"
+                          aria-label="Company"
+                          title="Company"
+                          className="inline-flex items-center"
                         >
-                          <rect x="3" y="1" width="7" height="12" />
-                          <rect x="3" y="17" width="7" height="6" />
-                          <rect x="14" y="1" width="7" height="6" />
-                          <rect x="14" y="11" width="7" height="12" />
-                        </svg>
-                        <span className="ml-2 text-xl font-bold tracking-wide text-gray-800 uppercase">
-                          Company
-                        </span>
+                          <MdOutlineCameraswitch className="text-3xl mr-2"></MdOutlineCameraswitch>
+                          <span className="ml-2 text-xl text-gray-800 font-bold tracking-wide  uppercase">
+                            Make Better Use
+                          </span>
+                        </Link>
                       </Link>
                     </div>
                     <div>
@@ -150,53 +141,48 @@ const Navbar = () => {
                     <ul className="space-y-4">
                       <li>
                         <Link
-                          to="/"
+                          to="/blogs"
                           aria-label="Our product"
                           title="Our product"
                           className="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-deep-purple-accent-400"
                         >
-                          Product
+                          Blogs
                         </Link>
                       </li>
+
                       <li>
-                        <Link
-                          to="/"
-                          aria-label="Our product"
-                          title="Our product"
-                          className="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-deep-purple-accent-400"
-                        >
-                          Features
-                        </Link>
-                      </li>
-                      <li>
-                        <Link
-                          to="/"
-                          aria-label="Product pricing"
-                          title="Product pricing"
-                          className="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-deep-purple-accent-400"
-                        >
-                          Pricing
-                        </Link>
-                      </li>
-                      <li>
-                        <Link
-                          to="/"
-                          aria-label="About us"
-                          title="About us"
-                          className="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-deep-purple-accent-400"
-                        >
-                          About us
-                        </Link>
-                      </li>
-                      <li>
-                        <Link
-                          to="/"
-                          className="inline-flex items-center justify-center w-full h-12 px-6 font-medium tracking-wide text-white transition duration-200 rounded shadow-md bg-deep-purple-accent-400 hover:bg-deep-purple-accent-700 focus:shadow-outline focus:outline-none"
-                          aria-label="Sign up"
-                          title="Sign up"
-                        >
-                          Sign up
-                        </Link>
+                        {user ? (
+                          <div className="">
+                            <li>
+                              <Link
+                                to="/dashboard"
+                                aria-label="About us"
+                                title="About us"
+                                className="font-medium tracking-widetransition-colors duration-200 hover:text-blue-300"
+                              >
+                                Dashboard
+                              </Link>
+                            </li>
+
+                            <span>
+                              <button
+                                onClick={handleLogOut}
+                                className="inline-flex items-center justify-center mt-5 w-full h-12 px-6 font-medium tracking-wide text-white transition duration-200 rounded shadow-md bg-primary hover:bg-blue-800 focus:shadow-outline focus:outline-none"
+                              >
+                                Log out
+                              </button>
+                            </span>
+                          </div>
+                        ) : (
+                          <Link
+                            to="/login"
+                            className="inline-flex items-center justify-center h-12 px-6 font-medium tracking-wide text-white transition duration-200 rounded shadow-md bg-primary hover:bg-blue-800 focus:shadow-outline focus:outline-none w-full"
+                            aria-label="Sign up"
+                            title="Sign up"
+                          >
+                            Sign in
+                          </Link>
+                        )}
                       </li>
                     </ul>
                   </nav>

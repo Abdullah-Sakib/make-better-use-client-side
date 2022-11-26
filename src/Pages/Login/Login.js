@@ -64,7 +64,6 @@ const Login = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
         toast.success(`${userData.name} registered successfully`);
       });
   };
@@ -85,12 +84,12 @@ const Login = () => {
 
   return (
     <div>
-      <div className="hero min-h-screen ">
-        <div className="hero-content flex-col ">
+      <div className="md:hero md:min-h-screen mt-10 mb-20">
+        <div className="md:hero-content flex-col px-6">
           <div className="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
             <form
               onSubmit={handleSubmit(handleLogIn)}
-              className="card-body w-96"
+              className="card-body w-full md:w-96"
             >
               <h1 className="text-2xl font-bold text-center">Login</h1>
               <div className="form-control">
@@ -149,9 +148,9 @@ const Login = () => {
           <div>
             <button
               onClick={handleGoogleLogin}
-              className="flex items-center shadow-xl w-96 h-10 rounded-full bg-primary text-white py-6 border"
+              className="flex items-center shadow-xl w-full md:w-96 h-10 rounded-full bg-primary text-white py-6 border"
             >
-              <BsGoogle className="text-4xl ml-2 text-orange-400"></BsGoogle>{" "}
+              <BsGoogle className="text-3xl ml-2 "></BsGoogle>{" "}
               <span className="flex-grow font-semibold">
                 Continue With Google
               </span>

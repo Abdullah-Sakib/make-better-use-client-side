@@ -8,8 +8,8 @@ import { AuthContext } from "../../Contexts/AuthProvider/AuthProvider";
 const Register = () => {
   const { createUser, updateUserProfile, googleLogin } =
     useContext(AuthContext);
-    const location = useLocation();
-    const from = location.state?.from?.pathname || '/';
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
   const {
     register,
     handleSubmit,
@@ -25,8 +25,8 @@ const Register = () => {
             reset();
             saveUserInDatabase(data);
             const user = result.user;
-            getJWT({email: user?.email});
-            navigate(from, {replace: true});
+            getJWT({ email: user?.email });
+            navigate(from, { replace: true });
             toast.success(`${data?.fullname} registered successfully`);
           })
           .catch((error) => console.error(error));
@@ -41,58 +41,58 @@ const Register = () => {
         const dataToSave = {
           fullname: user?.displayName,
           email: user?.email,
-          seller: false
+          seller: false,
         };
-        getJWT({email: result.user?.email});
-        navigate(from, {replace: true});
+        getJWT({ email: result.user?.email });
+        navigate(from, { replace: true });
         toast.success(`${result.user?.displayName} login successfully`);
         saveUserInDatabase(dataToSave);
       })
       .catch((error) => console.error(error));
   };
 
-  const saveUserInDatabase = data => {
+  const saveUserInDatabase = (data) => {
     const userData = {
       name: data.fullname,
       email: data.email,
-      role: `${data?.seller ? 'seller': 'user'}`
+      role: `${data?.seller ? "seller" : "user"}`,
     };
-    fetch('http://localhost:5000/users', {
-      method: 'POST',
+    fetch("http://localhost:5000/users", {
+      method: "POST",
       headers: {
-        'content-type': 'application/json',
-        authorization:`bearer ${localStorage.getItem('accessToken')}`
+        "content-type": "application/json",
+        authorization: `bearer ${localStorage.getItem("accessToken")}`,
       },
-      body: JSON.stringify(userData)
+      body: JSON.stringify(userData),
     })
-    .then(res => res.json())
-    .then(data => {
-      console.log(data)
-    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+      });
   };
 
-  const getJWT = user => {
-    fetch('http://localhost:5000/jwt', {
-      method: 'POST',
+  const getJWT = (user) => {
+    fetch("http://localhost:5000/jwt", {
+      method: "POST",
       headers: {
-        'content-type': 'application/json'
+        "content-type": "application/json",
       },
-      body: JSON.stringify(user)
+      body: JSON.stringify(user),
     })
-    .then(res => res.json())
-    .then(data => {
-      localStorage.setItem('accessToken', data.accessToken)
-    })
+      .then((res) => res.json())
+      .then((data) => {
+        localStorage.setItem("accessToken", data.accessToken);
+      });
   };
 
   return (
     <div>
-      <div className="hero mt-10 mb-20">
-        <div className="hero-content flex-col ">
-          <div className="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
+      <div className="md:hero mt-10 mb-20">
+        <div className=" flex-col px-6">
+          <div className="card flex-shrink-0 w-full  shadow-2xl bg-base-100">
             <form
               onSubmit={handleSubmit(handleCreateUser)}
-              className="card-body w-96"
+              className="card-body w-full md:w-96"
             >
               <h1 className="text-2xl font-bold text-center">Register</h1>
               <div className="form-control">
@@ -153,7 +153,7 @@ const Register = () => {
                 <label className="label cursor-pointer justify-start">
                   <input
                     type="checkbox"
-                    className="checkbox checkbox-primary"
+                    className="checkbox border-2 checkbox-primary"
                     {...register("seller")}
                   />
                   <span className="label-text ml-4">Seller Account</span>
@@ -174,9 +174,9 @@ const Register = () => {
           <div>
             <button
               onClick={handleGoogleLogin}
-              className="flex items-center shadow-xl w-96 h-10 rounded-full bg-primary text-white py-6 border"
+              className="flex items-center shadow-xl w-full lg:w-96 h-10 rounded-full bg-primary text-white py-6 border"
             >
-              <BsGoogle className="text-4xl ml-2 text-orange-400"></BsGoogle>{" "}
+              <BsGoogle className="text-3xl ml-2 "></BsGoogle>{" "}
               <span className="flex-grow font-semibold">
                 Continue With Google
               </span>
