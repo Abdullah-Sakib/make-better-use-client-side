@@ -12,12 +12,15 @@ const MyProducts = () => {
   } = useQuery({
     queryKey: ["sellerProducts"],
     queryFn: () =>
-      fetch(`https://assignment-12-server-side-gamma.vercel.app/sellerProducts`, {
-        method: "GET",
-        headers: {
-          authorization: `bearer ${localStorage.getItem("accessToken")}`,
-        },
-      }).then((res) => res.json()),
+      fetch(
+        `https://assignment-12-server-side-gamma.vercel.app/sellerProducts`,
+        {
+          method: "GET",
+          headers: {
+            authorization: `bearer ${localStorage.getItem("accessToken")}`,
+          },
+        }
+      ).then((res) => res.json()),
   });
 
   const handleDeleteProduct = (id) => {
@@ -25,12 +28,15 @@ const MyProducts = () => {
       "Are you sure you want to delete this product?"
     );
     if (agree) {
-      fetch(`https://assignment-12-server-side-gamma.vercel.app/products/${id}`, {
-        method: "DELETE",
-        headers: {
-          authorization: `bearer ${localStorage.getItem("accessToken")}`,
-        },
-      })
+      fetch(
+        `https://assignment-12-server-side-gamma.vercel.app/products/${id}`,
+        {
+          method: "DELETE",
+          headers: {
+            authorization: `bearer ${localStorage.getItem("accessToken")}`,
+          },
+        }
+      )
         .then((res) => res.json())
         .then((data) => {
           if (data.deletedCount > 0) {
@@ -46,13 +52,16 @@ const MyProducts = () => {
       "Are you sure you want to advertise this product?"
     );
     if (agree) {
-      fetch(`https://assignment-12-server-side-gamma.vercel.app/products/${id}`, {
-        method: "PATCH",
-        headers: {
-          "content-type": "application/json",
-          authorization: `bearer ${localStorage.getItem("accessToken")}`,
-        },
-      })
+      fetch(
+        `https://assignment-12-server-side-gamma.vercel.app/products/${id}`,
+        {
+          method: "PATCH",
+          headers: {
+            "content-type": "application/json",
+            authorization: `bearer ${localStorage.getItem("accessToken")}`,
+          },
+        }
+      )
         .then((res) => res.json())
         .then((data) => {
           if (data.modifiedCount > 0) {
@@ -60,11 +69,37 @@ const MyProducts = () => {
             refetch();
           }
         });
-    }
+    };
   };
 
+
+  const handleStopAdd = id => {
+    const agree = window.confirm(
+      "Are you sure you want to stop advertisement for this product?"
+    );
+    if (agree) {
+      fetch(
+        `https://assignment-12-server-side-gamma.vercel.app/product/stopadd/${id}`,
+        {
+          method: "PATCH",
+          headers: {
+            "content-type": "application/json",
+            authorization: `bearer ${localStorage.getItem("accessToken")}`,
+          },
+        }
+      )
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.modifiedCount > 0) {
+            toast.success("Your product has been advertised");
+            refetch();
+          }
+        });
+    };
+  }
+
   if (isLoading) {
-    return <LoadingSpinner></LoadingSpinner>
+    return <LoadingSpinner></LoadingSpinner>;
   }
 
   if (products.length === 0) {
@@ -90,10 +125,7 @@ const MyProducts = () => {
     <div>
       <div className="flex justify-between items-center mb-5">
         <h2 className="text-2xl font-semibold">My Products</h2>
-        <label
-          htmlFor="dashboard-drawer"
-          className=" drawer-button lg:hidden"
-        >
+        <label htmlFor="dashboard-drawer" className=" drawer-button lg:hidden">
           <BsFillArrowRightSquareFill className="text-3xl"></BsFillArrowRightSquareFill>
         </label>
       </div>
@@ -138,13 +170,22 @@ const MyProducts = () => {
                   </button>
                 </td>
                 <td>
-                  <button
-                    disabled={product?.sold || product?.advertise}
-                    onClick={() => handleAdvertisement(product._id)}
-                    className="btn btn-sm btn-success text-white"
-                  >
-                    Advertise
-                  </button>
+                  {product?.advertise ? (
+                    <button
+                      onClick={() => handleStopAdd(product._id)}
+                      className="btn btn-sm btn-success border-2 border-black text-white"
+                    >
+                      Stop Add
+                    </button>
+                  ) : (
+                    <button
+                      disabled={product?.sold}
+                      onClick={() => handleAdvertisement(product._id)}
+                      className="btn btn-sm btn-success text-white"
+                    >
+                      Advertise
+                    </button>
+                  )}
                 </td>
               </tr>
             ))}

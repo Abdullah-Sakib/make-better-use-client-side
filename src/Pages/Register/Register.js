@@ -60,8 +60,7 @@ const Register = () => {
     fetch("https://assignment-12-server-side-gamma.vercel.app/users", {
       method: "POST",
       headers: {
-        "content-type": "application/json",
-        authorization: `bearer ${localStorage.getItem("accessToken")}`,
+        "content-type": "application/json"
       },
       body: JSON.stringify(userData),
     })
