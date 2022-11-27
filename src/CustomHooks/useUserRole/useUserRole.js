@@ -4,7 +4,7 @@ const useUserRole = () => {
   const [role, setRole] = useState("");
   const [roleLoading, setRoleLoading] = useState(true);
 
-  fetch(`http://localhost:5000/userrole`, {
+  fetch(`https://assignment-12-server-side-gamma.vercel.app/userrole`, {
     headers: {
       authorization: `bearer ${localStorage.getItem("accessToken")}`,
     },

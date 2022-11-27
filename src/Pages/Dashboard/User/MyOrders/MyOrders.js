@@ -8,7 +8,7 @@ const MyOrders = () => {
   const { data: orders = [], isLoading } = useQuery({
     queryKey: ["myorders"],
     queryFn: () =>
-      fetch(`http://localhost:5000/bookedProducts`, {
+      fetch(`https://assignment-12-server-side-gamma.vercel.app/bookedProducts`, {
         method: "GET",
         headers: {
           authorization: `bearer ${localStorage.getItem("accessToken")}`,

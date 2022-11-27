@@ -34,7 +34,7 @@ const CategoriesPageCard = ({ product, setSelectedProduct }) => {
       image,
       verifiedSeller,
     };
-    fetch('http://localhost:5000/reportedItems', {
+    fetch('https://assignment-12-server-side-gamma.vercel.app/reportedItems', {
       method: 'POST',
       headers: {
         'content-type':'application/json',

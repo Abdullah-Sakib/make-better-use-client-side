@@ -57,7 +57,7 @@ const Register = () => {
       email: data.email,
       role: `${data?.seller ? "seller" : "user"}`,
     };
-    fetch("http://localhost:5000/users", {
+    fetch("https://assignment-12-server-side-gamma.vercel.app/users", {
       method: "POST",
       headers: {
         "content-type": "application/json",
@@ -72,7 +72,7 @@ const Register = () => {
   };
 
   const getJWT = (user) => {
-    fetch("http://localhost:5000/jwt", {
+    fetch("https://assignment-12-server-side-gamma.vercel.app/jwt", {
       method: "POST",
       headers: {
         "content-type": "application/json",

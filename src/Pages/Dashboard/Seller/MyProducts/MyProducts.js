@@ -12,7 +12,7 @@ const MyProducts = () => {
   } = useQuery({
     queryKey: ["sellerProducts"],
     queryFn: () =>
-      fetch(`http://localhost:5000/sellerProducts`, {
+      fetch(`https://assignment-12-server-side-gamma.vercel.app/sellerProducts`, {
         method: "GET",
         headers: {
           authorization: `bearer ${localStorage.getItem("accessToken")}`,
@@ -25,7 +25,7 @@ const MyProducts = () => {
       "Are you sure you want to delete this product?"
     );
     if (agree) {
-      fetch(`http://localhost:5000/products/${id}`, {
+      fetch(`https://assignment-12-server-side-gamma.vercel.app/products/${id}`, {
         method: "DELETE",
         headers: {
           authorization: `bearer ${localStorage.getItem("accessToken")}`,
@@ -46,7 +46,7 @@ const MyProducts = () => {
       "Are you sure you want to advertise this product?"
     );
     if (agree) {
-      fetch(`http://localhost:5000/products/${id}`, {
+      fetch(`https://assignment-12-server-side-gamma.vercel.app/products/${id}`, {
         method: "PATCH",
         headers: {
           "content-type": "application/json",
@@ -57,6 +57,7 @@ const MyProducts = () => {
         .then((data) => {
           if (data.modifiedCount > 0) {
             toast.success("Your product has been advertised");
+            refetch();
           }
         });
     }

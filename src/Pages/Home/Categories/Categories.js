@@ -7,7 +7,7 @@ const Categories = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/categories")
+      .get("https://assignment-12-server-side-gamma.vercel.app/categories")
       .then((result) => {
         setCategories(result.data);
       })

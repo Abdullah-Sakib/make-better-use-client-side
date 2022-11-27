@@ -8,7 +8,7 @@ const AllBuyers = () => {
   const { data: buyers = [], refetch, isLoading } = useQuery({
     queryKey: ["allsellers"],
     queryFn: () =>
-      fetch("http://localhost:5000/users/user", {
+      fetch("https://assignment-12-server-side-gamma.vercel.app/users/user", {
         headers: {
           authorization: `bearer ${localStorage.getItem('accessToken')}`
         }
@@ -16,7 +16,7 @@ const AllBuyers = () => {
   });
  
   const handleDeleteBuyer = id => {
-    fetch(`http://localhost:5000/users/${id}`,{
+    fetch(`https://assignment-12-server-side-gamma.vercel.app/users/${id}`,{
       method: "DELETE",
       headers: {
         authorization: `bearer ${localStorage.getItem('accessToken')}`

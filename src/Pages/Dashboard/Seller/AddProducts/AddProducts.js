@@ -15,7 +15,7 @@ const AddProducts = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/categories", {
+      .get("https://assignment-12-server-side-gamma.vercel.app/categories", {
         headers: {
           authorization: `bearer ${localStorage.getItem("accessToken")}`,
         },
@@ -52,7 +52,7 @@ const AddProducts = () => {
   };
 
   const saveProductInDB = (data) => {
-    fetch("http://localhost:5000/products", {
+    fetch("https://assignment-12-server-side-gamma.vercel.app/products", {
       method: "POST",
       headers: {
         "content-type": "application/json",

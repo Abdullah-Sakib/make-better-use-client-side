@@ -43,7 +43,7 @@ export const router = createBrowserRouter([
       {
         path: 'categories/:name',
         element: <PrivetRoute><CategoriesPage></CategoriesPage></PrivetRoute>,
-        loader: ({params}) => fetch(`http://localhost:5000/products?name=${params.name}`, {
+        loader: ({params}) => fetch(`https://assignment-12-server-side-gamma.vercel.app/products?name=${params.name}`, {
           headers: {
             authorization: `bearer ${localStorage.getItem('accessToken')}`
           }
@@ -83,7 +83,7 @@ export const router = createBrowserRouter([
       {
         path: '/dashboard/checkout/:id',
         element: <Checkout></Checkout>,
-        loader: ({params}) => fetch(`http://localhost:5000/bookedProducts/${params.id}`, {
+        loader: ({params}) => fetch(`https://assignment-12-server-side-gamma.vercel.app/bookedProducts/${params.id}`, {
           headers: {
             authorization: `bearer ${localStorage.getItem('accessToken')}`
           }

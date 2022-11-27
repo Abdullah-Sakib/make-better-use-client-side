@@ -12,7 +12,7 @@ const AllSellers = () => {
   } = useQuery({
     queryKey: ["allsellers"],
     queryFn: () =>
-      fetch("http://localhost:5000/users/seller",{
+      fetch("https://assignment-12-server-side-gamma.vercel.app/users/seller",{
         headers: {
           authorization: `bearer ${localStorage.getItem('accessToken')}`
         }
@@ -24,7 +24,7 @@ const AllSellers = () => {
     if(!agree){
       return
     }
-    fetch(`http://localhost:5000/users/${id}`, {
+    fetch(`https://assignment-12-server-side-gamma.vercel.app/users/${id}`, {
       method: "DELETE",
       headers: {
         authorization: `bearer ${localStorage.getItem('accessToken')}`
@@ -44,7 +44,7 @@ const AllSellers = () => {
     if(!agree){
       return
     }
-    fetch(`http://localhost:5000/users?id=${id}&email=${email}`, {
+    fetch(`https://assignment-12-server-side-gamma.vercel.app/users?id=${id}&email=${email}`, {
       method: "PATCH",
       headers: {
         "content-type": "application/json",

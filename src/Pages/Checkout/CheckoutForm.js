@@ -13,7 +13,7 @@ const CheckoutForm = ({ product }) => {
   const [processing, setProcessing] = useState(false);
 
   useEffect(() => {
-    fetch("http://localhost:5000/create-payment-intent", {
+    fetch("https://assignment-12-server-side-gamma.vercel.app/create-payment-intent", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -75,7 +75,7 @@ const CheckoutForm = ({ product }) => {
       setTransectionId(paymentIntent.id);
 
       fetch(
-        `http://localhost:5000/bookedProducts?mainProductId=${product.productId}&bookedProductId=${product._id}`,
+        `https://assignment-12-server-side-gamma.vercel.app/bookedProducts?mainProductId=${product.productId}&bookedProductId=${product._id}`,
         {
           method: "PATCH",
           headers: {

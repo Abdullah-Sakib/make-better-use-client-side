@@ -8,7 +8,7 @@ const ReportedItems = () => {
   const { data: reportedItems = [], refetch , isLoading} = useQuery({
     queryKey: ["reporteItems"],
     queryFn: () =>
-    fetch("http://localhost:5000/reportedItems", {
+    fetch("https://assignment-12-server-side-gamma.vercel.app/reportedItems", {
       headers: {
         authorization: `bearer ${localStorage.getItem('accessToken')}`
       }
@@ -17,7 +17,7 @@ const ReportedItems = () => {
 
 
   const handleDelete = (id, productId) => {
-    fetch(`http://localhost:5000/reportedItems?id=${id}&productId=${productId}`, {
+    fetch(`https://assignment-12-server-side-gamma.vercel.app/reportedItems?id=${id}&productId=${productId}`, {
       method: 'DELETE',
       headers: {
         authorization: `bearer ${localStorage.getItem('accessToken')}`

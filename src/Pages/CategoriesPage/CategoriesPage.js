@@ -36,7 +36,7 @@ const CategoriesPage = () => {
       productId: selectedProduct?._id,
     };
 
-    fetch(`http://localhost:5000/bookedProducts`, {
+    fetch(`https://assignment-12-server-side-gamma.vercel.app/bookedProducts`, {
       method: "POST",
       headers: {
         "content-type": "application/json",
@@ -69,7 +69,8 @@ const CategoriesPage = () => {
         <div>
           <input type="checkbox" id="booking-modal" className="modal-toggle" />
           <div className="modal">
-            <div className="modal-box py-6 px-5">
+            <div className="modal-box relative py-6 px-5">
+            <label htmlFor="booking-modal" className="btn btn-sm btn-circle absolute right-2 top-2">✕</label>
               <form onSubmit={handleBooking}>
                 <label className="label pb-1 pt-1">User name</label>
                 <input
