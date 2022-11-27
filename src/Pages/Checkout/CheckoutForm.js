@@ -13,14 +13,17 @@ const CheckoutForm = ({ product }) => {
   const [processing, setProcessing] = useState(false);
 
   useEffect(() => {
-    fetch("https://assignment-12-server-side-gamma.vercel.app/create-payment-intent", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        authorization: `bearer ${localStorage.getItem("accessToken")}`,
-      },
-      body: JSON.stringify({ price: product?.productPrice }),
-    })
+    fetch(
+      "https://assignment-12-server-side-gamma.vercel.app/create-payment-intent",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          authorization: `bearer ${localStorage.getItem("accessToken")}`,
+        },
+        body: JSON.stringify({ price: product?.productPrice }),
+      }
+    )
       .then((res) => res.json())
       .then((data) => setClientSecret(data.clientSecret));
   }, [product]);
@@ -51,8 +54,8 @@ const CheckoutForm = ({ product }) => {
     }
 
     setProcessing(true);
-    setSuccess('');
-    setTransectionId('');
+    setSuccess("");
+    setTransectionId("");
 
     const { paymentIntent, error: confirmError } =
       await stripe.confirmCardPayment(clientSecret, {
@@ -77,7 +80,7 @@ const CheckoutForm = ({ product }) => {
       fetch(
         `https://assignment-12-server-side-gamma.vercel.app/bookedProducts?mainProductId=${product.productId}&bookedProductId=${product._id}`,
         {
-          method: "PATCH",
+          method: "PUT",
           headers: {
             "content-type": "application/json",
             authorization: `bearer ${localStorage.getItem("accessToken")}`,
@@ -85,10 +88,10 @@ const CheckoutForm = ({ product }) => {
         }
       )
         .then((res) => res.json())
-        .then((data) =>{ 
-          console.log(data)
+        .then((data) => {
+          console.log(data);
         });
-    };
+    }
 
     setProcessing(false);
   };
@@ -127,9 +130,7 @@ const CheckoutForm = ({ product }) => {
         >
           Pay
         </button>
-        {
-          processing && <LoadingSpinner ></LoadingSpinner>
-        }
+        {processing && <LoadingSpinner></LoadingSpinner>}
       </div>
     </form>
   );

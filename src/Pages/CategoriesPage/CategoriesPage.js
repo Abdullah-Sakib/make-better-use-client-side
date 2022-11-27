@@ -8,6 +8,7 @@ import CategoriesPageCard from "./CategoriesPageCard";
 const CategoriesPage = () => {
   const { user } = useContext(AuthContext);
   const products = useLoaderData();
+  const unsoldProducts = products.filter(product => !product?.sold);
   const navigation = useNavigation();
   const [selectedProduct, setSelectedProduct] = useState(null);
 
@@ -58,7 +59,7 @@ const CategoriesPage = () => {
 
   return (
     <div className="container mx-auto my-16 lg:px-8 min-h-[80vh] grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 px-5 ">
-        {products?.map((product) => (
+        {unsoldProducts?.map((product) => (
           <CategoriesPageCard
             key={product._id}
             product={product}

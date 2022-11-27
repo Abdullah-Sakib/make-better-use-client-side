@@ -172,6 +172,7 @@ const MyProducts = () => {
                 <td>
                   {product?.advertise ? (
                     <button
+                    disabled={product?.sold}
                       onClick={() => handleStopAdd(product._id)}
                       className="btn btn-sm btn-success border-2 border-black text-white"
                     >
