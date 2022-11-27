@@ -46,3 +46,7 @@ https://assignment-12-edf33.web.app/
 - Stripe.
 - MongoDB.
 
+## Admin credentials
+adminEmail: admin@gmail.com
+
+adminPassword: 12345678
