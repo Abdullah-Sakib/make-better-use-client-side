@@ -115,6 +115,8 @@ const Advertisement = () => {
     }
   };
 
+  // dfasdfddf
+
   return (
     <div className="px-4 py-10 md:pt-16 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8  md:text-start">
       <h2 className="text-4xl font-extrabold leading-none mb-7 text-center md:text-start">
