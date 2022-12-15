@@ -2,11 +2,17 @@ import React from "react";
 import toast from "react-hot-toast";
 import { GoLocation } from "react-icons/go";
 import { MdVerified } from "react-icons/md";
+import { useNavigate } from "react-router-dom";
 
-const CategoriesPageCard = ({ product, setSelectedProduct }) => {
+const CategoriesPageCard = ({
+  product,
+  setSelectedProduct,
+  user,
+  location,
+}) => {
+  const navigate = useNavigate();
   const {
     name,
-    location,
     resellPrice,
     originalPrice,
     yearsOfUse,
@@ -18,14 +24,16 @@ const CategoriesPageCard = ({ product, setSelectedProduct }) => {
   } = product;
 
   const handleReport = () => {
-    const agree = window.confirm('Are you sure you want to report this product?');
-    if(!agree){
+    const agree = window.confirm(
+      "Are you sure you want to report this product?"
+    );
+    if (!agree) {
       return;
-    };
+    }
     const reportedItem = {
       productId: _id,
       name,
-      location,
+      location: product?.location,
       resellPrice,
       originalPrice,
       yearsOfUse,
@@ -34,20 +42,28 @@ const CategoriesPageCard = ({ product, setSelectedProduct }) => {
       image,
       verifiedSeller,
     };
-    fetch('https://assignment-12-server-side-gamma.vercel.app/reportedItems', {
-      method: 'POST',
+    fetch("https://assignment-12-server-side-gamma.vercel.app/reportedItems", {
+      method: "POST",
       headers: {
-        'content-type':'application/json',
-        authorization: `bearer ${localStorage.getItem('accessToken')}`
+        "content-type": "application/json",
+        authorization: `bearer ${localStorage.getItem("accessToken")}`,
       },
-      body: JSON.stringify(reportedItem)
+      body: JSON.stringify(reportedItem),
     })
-    .then(res => res.json())
-    .then(data => {
-      if(data.acknowledged){
-        toast.success("This product has been roported to Admin.")
-      }
-    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.acknowledged) {
+          toast.success("This product has been roported to Admin.");
+        }
+      });
+  };
+
+  const bookingCheck = () => {
+    if (user) {
+      setSelectedProduct(product);
+    } else {
+      navigate("/login", { state: { from: location } });
+    }
   };
 
   return (
@@ -62,7 +78,7 @@ const CategoriesPageCard = ({ product, setSelectedProduct }) => {
           </h2>
           <div className="flex flex-row-reverse justify-between">
             <p className="flex items-center justify-end text-base">
-              <GoLocation className="mr-2 "></GoLocation> {location}
+              <GoLocation className="mr-2 "></GoLocation> {product?.location}
             </p>
             <p className="text-base">
               Resell Price : <span className="font-bold">${resellPrice}</span>
@@ -94,7 +110,7 @@ const CategoriesPageCard = ({ product, setSelectedProduct }) => {
           <div className="card-actions justify-end">
             <label
               htmlFor="booking-modal"
-              onClick={() => setSelectedProduct(product)}
+              onClick={bookingCheck}
               className="btn btn-primary"
             >
               Book Now

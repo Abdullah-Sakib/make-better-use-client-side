@@ -2,11 +2,14 @@ import { useQuery } from "@tanstack/react-query";
 import React, { useContext, useState } from "react";
 import toast from "react-hot-toast";
 import { GoLocation } from "react-icons/go";
+import { MdVerified } from "react-icons/md";
+import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../../Contexts/AuthProvider/AuthProvider";
 
 const Advertisement = () => {
   const [selectedProduct, setSelectedProduct] = useState(null);
   const { user } = useContext(AuthContext);
+  const navigate = useNavigate();
   const { data: products = [], isLoading } = useQuery({
     queryKey: ["advertisedProducts"],
     queryFn: () =>
@@ -16,6 +19,8 @@ const Advertisement = () => {
   });
 
   const unsoldProducts = products.filter(product => !product?.sold);
+
+  console.log(unsoldProducts);
 
   if (unsoldProducts.length === 0) {
     return;
@@ -61,7 +66,7 @@ const Advertisement = () => {
             "Booking successfull. Please check My Orders and complete your payment."
           );
         }
-      });
+      });  
 
     setSelectedProduct(null);
   };
@@ -102,6 +107,14 @@ const Advertisement = () => {
       });
   };
 
+  const bookingCheck = product => {
+    if (user) {
+      setSelectedProduct(product);
+    } else {
+      navigate("/login" );
+    }
+  };
+
   return (
     <div className="px-4 py-10 md:pt-16 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8  md:text-start">
       <h2 className="text-4xl font-extrabold leading-none mb-7 text-center md:text-start">
@@ -139,7 +152,17 @@ const Advertisement = () => {
                 Years of use :{" "}
                 <span className="font-bold">{product.yearsOfUse}</span>
               </p>
-              <p className="text-base">Seller : {product.sellerName}</p>
+              <p className="text-base">
+            Seller :{" "}
+            {!product?.verifiedSeller ? (
+              <span>{product?.sellerName}</span>
+            ) : (
+              <span className="">
+                {product?.sellerName}{" "}
+                <MdVerified className="text-blue-500 ml-1 inline"></MdVerified>
+              </span>
+            )}{" "}
+          </p>
               <div className="flex justify-between items-center">
                 <p className="text-base">Post Time : {product.postDate}</p>
                 <button
@@ -152,7 +175,7 @@ const Advertisement = () => {
               <div className="card-actions justify-end">
                 <label
                   htmlFor="booking-modal"
-                  onClick={() => setSelectedProduct(product)}
+                  onClick={() => bookingCheck(product)}
                   className="btn btn-primary"
                 >
                   Book Now

@@ -42,7 +42,7 @@ export const router = createBrowserRouter([
       },
       {
         path: 'categories/:name',
-        element: <PrivetRoute><CategoriesPage></CategoriesPage></PrivetRoute>,
+        element: <CategoriesPage></CategoriesPage>,
         loader: ({params}) => fetch(`https://assignment-12-server-side-gamma.vercel.app/products?name=${params.name}`, {
           headers: {
             authorization: `bearer ${localStorage.getItem('accessToken')}`

@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import toast from "react-hot-toast";
-import { useLoaderData, useNavigation } from "react-router-dom";
+import { useLoaderData, useLocation, useNavigation } from "react-router-dom";
 import LoadingSpinner from "../../Components/LoadingSpinner/LoadingSpinner";
 import { AuthContext } from "../../Contexts/AuthProvider/AuthProvider";
 import CategoriesPageCard from "./CategoriesPageCard";
@@ -10,6 +10,7 @@ const CategoriesPage = () => {
   const products = useLoaderData();
   const unsoldProducts = products.filter(product => !product?.sold);
   const navigation = useNavigation();
+  const location = useLocation();
   const [selectedProduct, setSelectedProduct] = useState(null);
 
   if (navigation.state === "loading") {
@@ -46,7 +47,7 @@ const CategoriesPage = () => {
       body: JSON.stringify(bookingData),
     })
       .then((res) => res.json())
-      .then((data) => {
+      .then((data) => {  
         if (data.acknowledged) {
           toast.success(
             "Booking successfull. Please check My Orders and complete your payment."
@@ -64,6 +65,8 @@ const CategoriesPage = () => {
             key={product._id}
             product={product}
             setSelectedProduct={setSelectedProduct}
+            user={user}
+            location={location}
           ></CategoriesPageCard>
         ))}
       {selectedProduct && (
