@@ -39,6 +39,7 @@ const Login = () => {
           email: user?.email,
           seller: false,
         };
+        toast.success(`${result.user?.displayName} login successfully`);
         saveUserInDatabase(dataToSave);
         getJWT({ email: result.user?.email });
         navigate(from, { replace: true });
@@ -62,9 +63,7 @@ const Login = () => {
       body: JSON.stringify(userData),
     })
       .then((res) => res.json())
-      .then((data) => {
-        toast.success(`${userData.name} registered successfully`);
-      });
+      .then(() => {});
   };
 
   const getJWT = (user) => {
