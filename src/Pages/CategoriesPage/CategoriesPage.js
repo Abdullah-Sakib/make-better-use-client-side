@@ -8,10 +8,12 @@ import CategoriesPageCard from "./CategoriesPageCard";
 const CategoriesPage = () => {
   const { user } = useContext(AuthContext);
   const products = useLoaderData();
-  const unsoldProducts = products.filter(product => !product?.sold);
+  const unsoldProducts = products.filter((product) => !product?.sold);
   const navigation = useNavigation();
   const location = useLocation();
   const [selectedProduct, setSelectedProduct] = useState(null);
+
+  console.log(selectedProduct);
 
   if (navigation.state === "loading") {
     return <LoadingSpinner></LoadingSpinner>;
@@ -47,7 +49,7 @@ const CategoriesPage = () => {
       body: JSON.stringify(bookingData),
     })
       .then((res) => res.json())
-      .then((data) => {  
+      .then((data) => {
         if (data.acknowledged) {
           toast.success(
             "Booking successfull. Please check My Orders and complete your payment."
@@ -59,78 +61,80 @@ const CategoriesPage = () => {
   };
 
   return (
-    <div className="container mx-auto my-16 lg:px-8 min-h-[80vh] grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 px-5 ">
-        {unsoldProducts?.map((product) => (
-          <CategoriesPageCard
-            key={product._id}
-            product={product}
-            setSelectedProduct={setSelectedProduct}
-            user={user}
-            location={location}
-          ></CategoriesPageCard>
-        ))}
+    <div className="mx-auto my-16 lg:px-8 min-h-[80vh] grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 px-5 ">
+      {unsoldProducts?.map((product) => (
+        <CategoriesPageCard
+          key={product._id}
+          product={product}
+          setSelectedProduct={setSelectedProduct}
+          user={user}
+          location={location}
+        ></CategoriesPageCard>
+      ))}
       {selectedProduct && (
         <div>
           <input type="checkbox" id="booking-modal" className="modal-toggle" />
           <div className="modal">
-            <div className="modal-box relative py-6 px-5">
-            <label htmlFor="booking-modal" className="btn btn-sm btn-circle absolute right-2 top-2">✕</label>
+            <div className="modal-box relative pt-10 px-5 pb-5">
+              <label
+                htmlFor="booking-modal"
+                className="btn btn-sm btn-circle absolute right-2 top-2"
+              >
+                ✕
+              </label>
               <form onSubmit={handleBooking}>
-                <label className="label pb-1 pt-1">User name</label>
                 <input
                   type="text"
                   readOnly
                   name="username"
                   placeholder="Type here"
-                  defaultValue={user?.displayName}
-                  className="input input-bordered w-full "
+                  value={user?.displayName}
+                  className="input input-bordered w-full block px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
                 />
-                <label className="label pb-1 pt-1">User email</label>
                 <input
                   type="text"
                   readOnly
                   name="userEmail"
                   placeholder="Type here"
-                  defaultValue={user?.email}
-                  className="input input-bordered w-full"
+                  value={user?.email}
+                  className="input input-bordered w-full block px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
                 />
-                <label className="label pb-1 pt-1">Product name</label>
+
                 <input
                   type="text"
                   readOnly
                   name="productName"
                   placeholder="Type here"
-                  defaultValue={selectedProduct?.name}
-                  className="input input-bordered w-full"
+                  value={`Name: ${selectedProduct?.name}`}
+                  className="input input-bordered w-full block px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
                 />
-                <label className="label pb-1 pt-1">Product price</label>
                 <input
                   type="text"
                   readOnly
                   name="productPrice"
                   placeholder="product price"
-                  defaultValue={selectedProduct?.resellPrice}
-                  className="input input-bordered w-full"
+                  value={`Price: ${selectedProduct?.resellPrice}`}
+                  className="input input-bordered w-full block px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
                 />
-                <label className="label pb-1 pt-1">Phone number</label>
+
                 <input
                   type="text"
                   name="userPhoneNumber"
                   placeholder="your phone number"
-                  className="input input-bordered w-full"
+                  className="input input-bordered w-full block px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
                   required
                 />
-                <label className="label pb-1 pt-1">Meeting location</label>
+
                 <input
                   type="text"
                   name="meetingLocation"
                   placeholder="meeting location"
-                  className="input input-bordered w-full mb-3"
+                  className="input input-bordered w-full block px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring "
                   required
                 />
                 <button
                   htmlFor="booking-modal"
-                  className="btn btn-primary w-full"
+                  className="btn btn-primary w-full mt-4"
                 >
                   Book
                 </button>

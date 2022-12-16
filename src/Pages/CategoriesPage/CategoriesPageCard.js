@@ -69,12 +69,12 @@ const CategoriesPageCard = ({
   return (
     <div>
       <div className="card card-compact rounded-lg bg-base-100 shadow-xl">
-        <figure className="h-64">
+        <figure className="h-56">
           <img src={image} alt="Shoes" />
         </figure>
         <div className="card-body">
           <h2 className="card-title">
-            {name?.length > 30 ? name.slice(0, 30) + "..." : name}
+            {name?.length > 29 ? name.slice(0, 29) + "..." : name}
           </h2>
           <div className="flex flex-row-reverse justify-between">
             <p className="flex items-center justify-end text-base">
