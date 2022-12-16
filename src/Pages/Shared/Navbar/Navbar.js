@@ -1,19 +1,31 @@
 import React, { useContext, useState } from "react";
 import toast from "react-hot-toast";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../../Contexts/AuthProvider/AuthProvider";
 import { MdOutlineCameraswitch } from "react-icons/md";
+import { FaUser, FaUserSecret } from "react-icons/fa";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { logOut, user } = useContext(AuthContext);
+  const [isOpen, setIsOpen] = useState(false);
+  const naviaget = useNavigate();
   const handleLogOut = () => {
     logOut()
       .then(() => {
         toast.success("Logout Successfull.");
+        setIsOpen(false);
       })
       .catch((error) => console.error(error));
   };
+
+  const navigateToSignInPage = () => {
+    naviaget("/login");
+    setIsOpen(false);
+  };
+
+  console.log(user);
+
   return (
     <div className="bg-gray-900">
       <div className="px-4 py-2 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8">
@@ -40,38 +52,107 @@ const Navbar = () => {
               </Link>
             </li>
 
-            <li>
-              {user ? (
-                <div className="flex items-center">
-                  <span>
-                    <Link
-                      to="/dashboard"
-                      aria-label="About us"
-                      title="About us"
-                      className="font-medium tracking-wide text-gray-100 transition-colors duration-200 hover:text-blue-300"
-                    >
-                      Dashboard
-                    </Link>
-                  </span>
-
-                  <span>
-                    <button
-                      onClick={handleLogOut}
-                      className="inline-flex items-center justify-center ml-7 h-12 px-6 font-medium tracking-wide text-white transition duration-200 rounded shadow-md bg-primary hover:bg-blue-800 focus:shadow-outline focus:outline-none"
-                    >
-                      Log out
-                    </button>
-                  </span>
-                </div>
-              ) : (
+            {user && (
+              <li>
                 <Link
-                  to="/login"
-                  className="inline-flex items-center justify-center h-12 px-6 font-medium tracking-wide text-white transition duration-200 rounded shadow-md bg-primary hover:bg-blue-800 focus:shadow-outline focus:outline-none"
-                  aria-label="Sign up"
-                  title="Sign up"
+                  to="/dashboard"
+                  title="Dashboard"
+                  className="font-medium tracking-wide text-gray-100 transition-colors duration-200 hover:text-blue-300"
                 >
-                  Sign in
+                  Dashboard
                 </Link>
+              </li>
+            )}
+
+            <li>
+              <div x-data="{ isOpen: true }" className="relative inline-block ">
+                {/* <!-- Dropdown toggle button --> */}
+                <button
+                  onClick={() => setIsOpen(!isOpen)}
+                  className="relative z-10 flex items-center p-2 text-sm text-gray-600 bg-white border border-transparent rounded-md focus:border-blue-500 focus:ring-opacity-40 dark:focus:ring-opacity-40 focus:ring-blue-300 dark:focus:ring-blue-400 focus:ring dark:text-white dark:bg-gray-800 focus:outline-none"
+                >
+                  <FaUser className="text-xl"></FaUser>
+                </button>
+              </div>
+
+              {/* <!-- Dropdown menu --> */}
+              {isOpen && (
+                <div className="absolute right-0 z-20 w-64 py-2 mt-2 overflow-hidden bg-white rounded-md shadow-xl dark:bg-gray-800">
+                  {user && (
+                    <span
+                      href="/"
+                      className="flex items-center p-3 -mt-2 text-sm text-gray-600 transition-colors duration-300 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white"
+                    >
+                      {user?.photoURL ? (
+                        <img
+                          className="flex-shrink-0 object-cover mr-1 rounded-full w-9 h-9"
+                          src={user?.photoURL}
+                          alt="jane avatar"
+                        />
+                      ) : (
+                        <span className="mr-1 flex-shrink-0 rounded-full ">
+                          <FaUserSecret className="w-9 h-9"></FaUserSecret>
+                        </span>
+                      )}
+                      <div className="mx-1">
+                        <h1 className="text-sm font-semibold text-gray-700 dark:text-gray-200">
+                          {user?.displayName}
+                        </h1>
+                        <p className="text-sm text-gray-500 dark:text-gray-400">
+                          {user?.email}
+                        </p>
+                      </div>
+                    </span>
+                  )}
+
+                  {user && (
+                    <hr className="border-gray-200 dark:border-gray-700 " />
+                  )}
+
+                  <div>
+                    {user ? (
+                      <div className="">
+                        <button
+                          onClick={handleLogOut}
+                          className="flex items-center p-3 text-sm text-gray-600 capitalize transition-colors duration-300 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white w-full"
+                        >
+                          <svg
+                            className="w-5 h-5 mx-1"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M19 21H10C8.89543 21 8 20.1046 8 19V15H10V19H19V5H10V9H8V5C8 3.89543 8.89543 3 10 3H19C20.1046 3 21 3.89543 21 5V19C21 20.1046 20.1046 21 19 21ZM12 16V13H3V11H12V8L17 12L12 16Z"
+                              fill="currentColor"
+                            ></path>
+                          </svg>
+
+                          <span className="mx-1">Sign Out</span>
+                        </button>
+                      </div>
+                    ) : (
+                      <button
+                        onClick={navigateToSignInPage}
+                        className="flex items-center p-3 text-sm text-gray-600 capitalize transition-colors duration-300 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white w-full"
+                      >
+                        <svg
+                          className="w-5 h-5 mx-1"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M19 21H10C8.89543 21 8 20.1046 8 19V15H10V19H19V5H10V9H8V5C8 3.89543 8.89543 3 10 3H19C20.1046 3 21 3.89543 21 5V19C21 20.1046 20.1046 21 19 21ZM12 16V13H3V11H12V8L17 12L12 16Z"
+                            fill="currentColor"
+                          ></path>
+                        </svg>
+
+                        <span className="mx-1">Sign In</span>
+                      </button>
+                    )}
+                  </div>
+                </div>
               )}
             </li>
           </ul>
